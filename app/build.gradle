@@ -35,4 +35,14 @@ dependencies {
 
     implementation AndroidLibraries.dagger
     annotationProcessor AndroidLibraries.daggerAnnotation
+
+    implementation AndroidLibraries.lifecycleExtensions
+    implementation AndroidLibraries.lifecycleViewModel
+    
+    implementation AndroidLibraries.retrofit
+    implementation AndroidLibraries.retrofitGsonConverter
+    implementation AndroidLibraries.retrofitRxAdapter
+
+    implementation AndroidLibraries.rxRoom
+
 }
