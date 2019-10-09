@@ -34,7 +34,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation AndroidLibraries.dagger
+    implementation AndroidLibraries.daggerAndroid
+    implementation AndroidLibraries.daggerAndroidSupport
     annotationProcessor AndroidLibraries.daggerAnnotation
+    annotationProcessor AndroidLibraries.daggerProcessor
 
     implementation AndroidLibraries.lifecycleExtensions
     implementation AndroidLibraries.lifecycleViewModel
@@ -42,6 +45,8 @@ dependencies {
     implementation AndroidLibraries.retrofit
     implementation AndroidLibraries.retrofitGsonConverter
     implementation AndroidLibraries.retrofitRxAdapter
+    implementation AndroidLibraries.httpLoggingInterceptor
+    implementation AndroidLibraries.gson
 
     implementation AndroidLibraries.rxRoom
 

@@ -31,8 +31,12 @@ object Release {
 }
 
 object AndroidLibraries {
+
     const val dagger = "com.google.dagger:dagger:${Versions.daggerVersion}"
+    const val daggerAndroid = "com.google.dagger:dagger-android:${Versions.daggerVersion}"
+    const val daggerAndroidSupport = "com.google.dagger:dagger-android-support:${Versions.daggerVersion}"
     const val daggerAnnotation = "com.google.dagger:dagger-compiler:${Versions.daggerVersion}"
+    const val daggerProcessor = "com.google.dagger:dagger-android-processor:${Versions.daggerVersion}"
     const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val appCompact = "androidx.appcompat:appcompat:${Versions.appCompact}"
