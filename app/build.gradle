@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion Versions.compiledSdk
     buildToolsVersion "29.0.2"
@@ -14,6 +16,9 @@ android {
         versionCode Versions.versionCode
         versionName Release.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+        buildConfigField "String", "API_KEY", "\"01c5d0d1ff15325934327ab3965e26f6\""
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -25,7 +30,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin_version}"
     implementation AndroidLibraries.appCompact
     implementation AndroidLibraries.coreKtx
     implementation AndroidLibraries.constraintLayout
@@ -34,5 +39,20 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation AndroidLibraries.dagger
-    annotationProcessor AndroidLibraries.daggerAnnotation
+    implementation AndroidLibraries.daggerAndroid
+    implementation AndroidLibraries.daggerAndroidSupport
+    kapt AndroidLibraries.daggerAnnotation
+    kapt AndroidLibraries.daggerProcessor
+
+    implementation AndroidLibraries.lifecycleExtensions
+    implementation AndroidLibraries.lifecycleViewModel
+    
+    implementation AndroidLibraries.retrofit
+    implementation AndroidLibraries.retrofitGsonConverter
+    implementation AndroidLibraries.retrofitRxAdapter
+    implementation AndroidLibraries.httpLoggingInterceptor
+    implementation AndroidLibraries.gson
+
+    implementation AndroidLibraries.rxRoom
+
 }
