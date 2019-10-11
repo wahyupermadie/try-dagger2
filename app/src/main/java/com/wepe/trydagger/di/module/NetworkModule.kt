@@ -3,6 +3,7 @@ package com.wepe.trydagger.di.module
 import android.app.Application
 import android.os.SystemClock
 import android.util.Log
+import com.google.gson.Gson
 import com.wepe.trydagger.BuildConfig
 import com.wepe.trydagger.MainApplication
 import com.wepe.trydagger.data.network.ApiService
@@ -21,6 +22,10 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule {
+    @Provides
+    @Singleton
+    fun gson(): Gson = Gson()
+
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient{
