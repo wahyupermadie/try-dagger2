@@ -18,11 +18,12 @@ import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
 import javax.inject.Inject
 
 class MoviesFragment : BaseFragment(){
-    private lateinit var binding : FragmentMoviesBinding
 
-    private lateinit var viewModel: MoviesViewModel
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var binding : FragmentMoviesBinding
+    private lateinit var viewModel: MoviesViewModel
+
     companion object {
 
         fun newInstance() : MoviesFragment {

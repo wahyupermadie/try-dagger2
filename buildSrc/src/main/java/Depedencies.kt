@@ -22,7 +22,7 @@ object Versions {
     const val rxRoom = "2.1.0"
     const val rxKotlin = "2.4.0"
     const val rx = "2.2.12"
-
+    const val anko = "0.10.8"
     const val material = "1.0.0"
     const val coroutine="1.1.1"
     const val lifecycle = "2.1.0-alpha04"
@@ -33,7 +33,7 @@ object Release {
 }
 
 object AndroidLibraries {
-
+    const val anko = "org.jetbrains.anko:anko:${Versions.anko}"
     const val dagger = "com.google.dagger:dagger:${Versions.daggerVersion}"
     const val daggerAndroid = "com.google.dagger:dagger-android:${Versions.daggerVersion}"
     const val daggerAndroidSupport = "com.google.dagger:dagger-android-support:${Versions.daggerVersion}"

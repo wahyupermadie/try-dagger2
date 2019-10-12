@@ -60,4 +60,5 @@ dependencies {
     implementation AndroidLibraries.material
     implementation AndroidLibraries.rxRoom
 
+    implementation AndroidLibraries.anko
 }
