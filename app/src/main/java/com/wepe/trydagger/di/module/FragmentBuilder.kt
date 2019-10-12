@@ -1,19 +1,15 @@
 package com.wepe.trydagger.di.module
 
-import com.wepe.trydagger.di.FragmentKey
-import com.wepe.trydagger.ui.movies.component.MoviesComponent
+import com.wepe.trydagger.di.scope.FragmentScope
 import com.wepe.trydagger.ui.movies.fragment.MoviesFragment
-import dagger.Binds
+import com.wepe.trydagger.ui.movies.module.MoviesModule
 import dagger.Module
-import dagger.android.AndroidInjector
-import dagger.multibindings.IntoMap
+import dagger.android.ContributesAndroidInjector
 
-@Module(subcomponents = [
-    (MoviesComponent::class)])
+@Module
 abstract class FragmentBuilder {
 
-    @Binds
-    @IntoMap
-    @FragmentKey(MoviesFragment::class)
-    internal abstract fun bindMoviesComponent(factory: MoviesComponent.Factory): AndroidInjector.Factory<*>
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [(MoviesModule::class)])
+    internal abstract fun bindMoviesFragment(): MoviesFragment
 }

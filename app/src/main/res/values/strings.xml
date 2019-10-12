@@ -2,4 +2,8 @@
     <string name="app_name">Try Dagger</string>
     <string name="tv_show_label">Tv Show</string>
     <string name="movies_label">Movies</string>
+    <string name="lbl_title_default">Title</string>
+    <string name="lbl_release_date_default">Release Date</string>
+    <string name="lbl_overview">Overview</string>
+    <string name="lbl_trailers">Trailers</string>
 </resources>

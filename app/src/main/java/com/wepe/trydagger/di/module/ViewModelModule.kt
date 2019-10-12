@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.wepe.trydagger.di.viewmodel.ViewModelFactory
 import com.wepe.trydagger.di.viewmodel.ViewModelKey
+import com.wepe.trydagger.ui.movies.viewmodel.DetailMoviesVM
 import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
 import dagger.Binds
 import dagger.Module
@@ -18,4 +19,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MoviesViewModel::class)
     abstract fun provideMoviesViewModel(moviesViewModel: MoviesViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailMoviesVM::class)
+    abstract fun provideDetailMoviesViewModel(detailMoviesVM: DetailMoviesVM) : ViewModel
+
 }

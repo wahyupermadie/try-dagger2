@@ -1,7 +1,6 @@
 package com.wepe.trydagger.base
 
 import android.app.ProgressDialog
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer

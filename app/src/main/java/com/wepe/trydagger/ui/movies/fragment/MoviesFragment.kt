@@ -2,7 +2,6 @@ package com.wepe.trydagger.ui.movies.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +14,9 @@ import com.wepe.trydagger.base.BaseFragment
 import com.wepe.trydagger.base.BaseViewModel
 import com.wepe.trydagger.databinding.FragmentMoviesBinding
 import com.wepe.trydagger.ui.movies.adapter.MoviesAdapter
+import com.wepe.trydagger.ui.movies.detail.DetailMovieActivity
 import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
-import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 
 class MoviesFragment : BaseFragment(){
@@ -62,18 +62,18 @@ class MoviesFragment : BaseFragment(){
     private fun initData() {
         viewModel.getMovies(1)
         viewModel.movies.observe(viewLifecycleOwner, Observer {
-            it.results?.forEach {
-                it?.let {movies ->
-                    mAdapter.addData(movies)
+            if (it != null){
+                it.results?.forEach {results ->
+                    mAdapter.addData(results)
                 }
+                mAdapter.notifyDataSetChanged()
             }
-            mAdapter.notifyDataSetChanged()
         })
     }
 
     private fun initUi() {
         mAdapter = MoviesAdapter(arrayListOf()){
-            toast("DATA "+it.originalLanguage)
+            startActivity<DetailMovieActivity>("movies" to it)
         }
 
         binding.rvMovies.apply {
