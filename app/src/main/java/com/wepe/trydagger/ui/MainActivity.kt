@@ -12,8 +12,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.wepe.trydagger.R
 import com.wepe.trydagger.databinding.ActivityMainBinding
-import com.wepe.trydagger.ui.movies.list.MoviesFragment
-import dagger.android.AndroidInjection
+import com.wepe.trydagger.ui.movies.fragment.MoviesFragment
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
     BottomNavigationView.OnNavigationItemSelectedListener {

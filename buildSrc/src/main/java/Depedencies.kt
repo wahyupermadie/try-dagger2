@@ -26,6 +26,8 @@ object Versions {
     const val material = "1.0.0"
     const val coroutine="1.1.1"
     const val lifecycle = "2.1.0-alpha04"
+
+    const val glide = "4.10.0"
 }
 
 object Release {
@@ -53,6 +55,8 @@ object AndroidLibraries {
     const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlin}"
     const val rxRoom = "androidx.room:room-rxjava2:${Versions.rxRoom}"
 
+    const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+    const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
     const val material = "com.google.android.material:material:${Versions.material}"
     const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine}"
     const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"

@@ -60,5 +60,8 @@ dependencies {
     implementation AndroidLibraries.material
     implementation AndroidLibraries.rxRoom
 
+    implementation AndroidLibraries.glide
+    kapt AndroidLibraries.glideCompiler
+
     implementation AndroidLibraries.anko
 }
