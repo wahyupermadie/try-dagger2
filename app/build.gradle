@@ -55,6 +55,7 @@ dependencies {
     implementation AndroidLibraries.retrofitRxAdapter
     implementation AndroidLibraries.httpLoggingInterceptor
     implementation AndroidLibraries.gson
+    implementation AndroidLibraries.coroutine
 
     implementation AndroidLibraries.rxRoom
 

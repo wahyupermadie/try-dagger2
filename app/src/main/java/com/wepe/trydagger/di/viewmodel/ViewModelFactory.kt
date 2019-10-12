@@ -15,7 +15,7 @@ class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Cl
         return if (provider != null) {
             provider.get() as T
         } else {
-            throw IllegalArgumentException("Can't find provider for ViewModel class ${modelClass.simpleName}")
+            throw IllegalArgumentException("Can't find provider for ViewModel class ${modelClass.simpleName}") as Throwable
         }
     }
 }

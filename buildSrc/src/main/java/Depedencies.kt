@@ -23,6 +23,7 @@ object Versions {
     const val rxKotlin = "2.4.0"
     const val rx = "2.2.12"
 
+    const val coroutine="1.1.1"
     const val lifecycle = "2.1.0-alpha04"
 }
 
@@ -51,6 +52,7 @@ object AndroidLibraries {
     const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlin}"
     const val rxRoom = "androidx.room:room-rxjava2:${Versions.rxRoom}"
 
+    const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine}"
     const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
 }
