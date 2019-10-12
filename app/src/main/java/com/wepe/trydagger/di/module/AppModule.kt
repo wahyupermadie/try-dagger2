@@ -9,8 +9,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 
-@Module(subcomponents = [
-    (MoviesComponent::class)])
+@Module
 class AppModule {
     @Provides
     @Singleton

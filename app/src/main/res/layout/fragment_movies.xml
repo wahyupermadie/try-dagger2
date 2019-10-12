@@ -8,6 +8,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="Hello Brow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

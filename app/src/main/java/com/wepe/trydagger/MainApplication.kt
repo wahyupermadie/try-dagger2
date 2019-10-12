@@ -13,12 +13,8 @@ import javax.inject.Inject
 
 class MainApplication : Application(), HasAndroidInjector {
 
-    companion object {
-        @JvmStatic
-        lateinit var instance: MainApplication
-        @JvmStatic
-        lateinit var appComponent: ApplicationComponent
-    }
+    lateinit var instance: MainApplication
+    lateinit var appComponent: ApplicationComponent
 
     @Inject
     lateinit var mActivityDispatchingAndroidInjector: DispatchingAndroidInjector<Any>

@@ -6,9 +6,8 @@ import com.wepe.trydagger.ui.movies.module.MoviesModule
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 
-@FragmentScope
 @Subcomponent(modules = [(MoviesModule::class)])
-interface MoviesComponent : AndroidInjector<MoviesFragment>{
-    @Subcomponent.Builder
-    abstract class Builder : AndroidInjector.Builder<MoviesFragment>()
+interface MoviesComponent : AndroidInjector<MoviesFragment> {
+    @Subcomponent.Factory
+    interface Factory : AndroidInjector.Factory<MoviesFragment>
 }

@@ -7,15 +7,7 @@ import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
-class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>) : ViewModelProvider.Factory{
+class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>) : ViewModelProvider.Factory {
 
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        val provider = viewModels[modelClass]
-        return if (provider != null) {
-            provider.get() as T
-        } else {
-            throw IllegalArgumentException("Can't find provider for ViewModel class ${modelClass.simpleName}") as Throwable
-        }
-    }
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = viewModels[modelClass]?.get() as T
 }
