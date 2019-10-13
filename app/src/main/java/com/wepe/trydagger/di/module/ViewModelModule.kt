@@ -6,6 +6,7 @@ import com.wepe.trydagger.di.viewmodel.ViewModelFactory
 import com.wepe.trydagger.di.viewmodel.ViewModelKey
 import com.wepe.trydagger.ui.movies.viewmodel.DetailMoviesVM
 import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
+import com.wepe.trydagger.ui.tv.viewmodel.TvShowViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -25,4 +26,8 @@ abstract class ViewModelModule {
     @ViewModelKey(DetailMoviesVM::class)
     abstract fun provideDetailMoviesViewModel(detailMoviesVM: DetailMoviesVM) : ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(TvShowViewModel::class)
+    abstract fun provideTvShowViewModel(tvShowVM: TvShowViewModel) : ViewModel
 }

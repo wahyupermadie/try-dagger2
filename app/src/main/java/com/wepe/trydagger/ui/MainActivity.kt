@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.wepe.trydagger.R
 import com.wepe.trydagger.databinding.ActivityMainBinding
 import com.wepe.trydagger.ui.movies.fragment.MoviesFragment
+import com.wepe.trydagger.ui.tv.fragment.TvShowFragment
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
     BottomNavigationView.OnNavigationItemSelectedListener {
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
     private lateinit var binding : ActivityMainBinding
     private val fragments = listOf(
         MoviesFragment.newInstance(),
-        MoviesFragment.newInstance()
+        TvShowFragment.newInstance()
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -16,6 +16,7 @@ import com.wepe.trydagger.databinding.FragmentMoviesBinding
 import com.wepe.trydagger.ui.movies.adapter.MoviesAdapter
 import com.wepe.trydagger.ui.movies.detail.DetailMovieActivity
 import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
+import dagger.android.AndroidInjection
 import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 
