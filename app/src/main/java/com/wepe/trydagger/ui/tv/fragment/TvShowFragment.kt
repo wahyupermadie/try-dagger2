@@ -15,7 +15,9 @@ import com.wepe.trydagger.base.BaseViewModel
 import com.wepe.trydagger.databinding.FragmentTvShowBinding
 import com.wepe.trydagger.di.viewmodel.ViewModelFactory
 import com.wepe.trydagger.ui.tv.adapter.TvShowAdapter
+import com.wepe.trydagger.ui.tv.detail.DetailTvShowActivity
 import com.wepe.trydagger.ui.tv.viewmodel.TvShowViewModel
+import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 
 class TvShowFragment : BaseFragment() {
@@ -71,7 +73,7 @@ class TvShowFragment : BaseFragment() {
 
     private fun initUi() {
         mAdapter = TvShowAdapter(arrayListOf()){
-
+            startActivity<DetailTvShowActivity>("tvShow" to it)
         }
         binding.rvTvShow.apply {
             this.adapter = mAdapter

@@ -1,45 +1,48 @@
 package com.wepe.trydagger.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class ResultsTv(
 
 	@field:SerializedName("first_air_date")
-	val firstAirDate: String? = null,
+	var firstAirDate: String? = null,
 
 	@field:SerializedName("overview")
-	val overview: String? = null,
+	var overview: String? = null,
 
 	@field:SerializedName("original_language")
-	val originalLanguage: String? = null,
+	var originalLanguage: String? = null,
 
 	@field:SerializedName("genre_ids")
-	val genreIds: List<Int?>? = null,
+	var genreIds: List<Int?>? = null,
 
 	@field:SerializedName("poster_path")
-	val posterPath: String? = null,
+	var posterPath: String? = null,
 
 	@field:SerializedName("origin_country")
-	val originCountry: List<String?>? = null,
+	var originCountry: List<String?>? = null,
 
 	@field:SerializedName("backdrop_path")
-	val backdropPath: String? = null,
+	var backdropPath: String? = null,
 
 	@field:SerializedName("original_name")
-	val originalName: String? = null,
+	var originalName: String? = null,
 
 	@field:SerializedName("popularity")
-	val popularity: Double? = null,
+	var popularity: Double? = null,
 
 	@field:SerializedName("vote_average")
-	val voteAverage: Double? = null,
+	var voteAverage: Double? = null,
 
 	@field:SerializedName("name")
-	val name: String? = null,
+	var name: String? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+	var id: Int? = null,
 
 	@field:SerializedName("vote_count")
-	val voteCount: Int? = null
-)
+	var voteCount: Int? = null
+) : Parcelable
