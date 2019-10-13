@@ -32,6 +32,9 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         binding.nsvpContent.adapter = ViewPagerAdapter(supportFragmentManager)
         binding.nsvpContent.offscreenPageLimit = fragments.size
         binding.navigation.setOnNavigationItemSelectedListener(this)
+
+        supportActionBar?.title = getString(R.string.movies_label)
+        binding.navigation.selectedItemId = 0
     }
 
     override fun onPageScrollStateChanged(state: Int) {}

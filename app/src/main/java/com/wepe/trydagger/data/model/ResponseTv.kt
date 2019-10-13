@@ -11,7 +11,7 @@ data class ResponseTv(
 	val totalPages: Int? = null,
 
     @field:SerializedName("results")
-	val results: List<ResultsTv?>? = null,
+	val results: List<ResultsTv>? = null,
 
     @field:SerializedName("total_results")
 	val totalResults: Int? = null

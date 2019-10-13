@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="items" type="com.wepe.trydagger.data.model.ResultsTv"/>
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        app:cardCornerRadius="20dp"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatImageView
+                app:srcImage='@{String.format("%s",items.backdropPath)}'
+                android:src="@color/colorPrimaryDark"
+                android:scaleType="centerCrop"
+                android:id="@+id/iv_movie_list"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@{items.originalName}"
+                android:textSize="25sp"
+                android:id="@+id/tv_movie_list_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_marginBottom="10dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@{items.overview}"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/tv_movie_list_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.google.android.material.card.MaterialCardView>
+</layout>
