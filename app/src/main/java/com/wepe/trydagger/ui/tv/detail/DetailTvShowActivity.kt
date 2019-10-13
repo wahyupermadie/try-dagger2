@@ -1,15 +1,14 @@
 package com.wepe.trydagger.ui.tv.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.wepe.trydagger.R
 import com.wepe.trydagger.data.model.ResultsTv
 import com.wepe.trydagger.databinding.ActivityDetailTvShowBinding
-import com.wepe.trydagger.di.viewmodel.ViewModelFactory
 import com.wepe.trydagger.ui.tv.viewmodel.TvShowDetailVM
 import dagger.android.AndroidInjection
 import javax.inject.Inject

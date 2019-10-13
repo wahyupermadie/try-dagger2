@@ -13,7 +13,6 @@ import com.wepe.trydagger.MainApplication
 import com.wepe.trydagger.base.BaseFragment
 import com.wepe.trydagger.base.BaseViewModel
 import com.wepe.trydagger.databinding.FragmentTvShowBinding
-import com.wepe.trydagger.di.viewmodel.ViewModelFactory
 import com.wepe.trydagger.ui.tv.adapter.TvShowAdapter
 import com.wepe.trydagger.ui.tv.detail.DetailTvShowActivity
 import com.wepe.trydagger.ui.tv.viewmodel.TvShowViewModel
