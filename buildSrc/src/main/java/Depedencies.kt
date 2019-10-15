@@ -28,6 +28,10 @@ object Versions {
     const val lifecycle = "2.1.0-alpha04"
 
     const val glide = "4.10.0"
+
+//    Testing
+    const val mockWebServer = "4.2.1"
+    const val robolectric = "4.3"
 }
 
 object Release {
@@ -61,4 +65,8 @@ object AndroidLibraries {
     const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine}"
     const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
+
+    // TESTING
+    const val mockWebServer = "com.squareup.okhttp3:mockwebserver:${Versions.mockWebServer}"
+    const val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
 }

@@ -23,11 +23,15 @@ class DetailMovieActivity : AppCompatActivity() {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_movie)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailMoviesVM::class.java)
+
+        initUi()
+        initData()
+    }
+
+    private fun initUi() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailMoviesVM::class.java)
-        initData()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
