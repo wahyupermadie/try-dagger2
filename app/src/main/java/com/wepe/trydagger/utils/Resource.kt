@@ -1,6 +1,6 @@
 package com.wepe.trydagger.utils
 
-data class Resource<T>(val status: Status, var data: T?, val error: String?) {
+data class Resource<T>(var status: Status, var data: T?, var error: String?) {
     companion object {
         fun <T> success(data: T?): Resource<T> {
             return Resource(
