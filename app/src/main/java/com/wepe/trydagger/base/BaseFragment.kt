@@ -8,14 +8,14 @@ import com.google.android.material.snackbar.Snackbar
 import com.wepe.trydagger.extention.showSnackbar
 import org.jetbrains.anko.support.v4.indeterminateProgressDialog
 
-abstract class BaseFragment : Fragment(){
+abstract class BaseFragment : Fragment(), BaseView{
     private lateinit var dialog : ProgressDialog
 
     abstract fun getViewModel() : BaseViewModel
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        dialog = indeterminateProgressDialog("Fething data...", "Please wait")
-//        dialog.setCancelable(false)
+        dialog = indeterminateProgressDialog("Fething data...", "Please wait")
+        dialog.setCancelable(false)
         setupObserver(getViewModel())
     }
 
@@ -28,12 +28,19 @@ abstract class BaseFragment : Fragment(){
             }
         })
 
-//        viewModel.loadingHandler.observe(viewLifecycleOwner, Observer {
-//            if (it){
-//                dialog.show()
-//            }else{
-//                dialog.dismiss()
-//            }
-//        })
+        viewModel.loadingHandler.observe(viewLifecycleOwner, Observer {
+            if (it){
+                dialog.show()
+            }else{
+                dialog.dismiss()
+            }
+        })
+    }
+
+    override fun showProgressBar(state: Boolean) {
+        if (state)
+            dialog.show()
+        else
+            dialog.dismiss()
     }
 }

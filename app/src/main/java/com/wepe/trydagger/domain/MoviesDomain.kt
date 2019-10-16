@@ -11,8 +11,8 @@ import javax.inject.Inject
 class MoviesDomain @Inject constructor(private val moviesRepositoryImpl: MoviesRepositoryImpl){
 
     suspend fun fetchMovies(page : Int, apiKey: String) : LiveData<Resource<ResponseMovies>>{
-        return Transformations.map(moviesRepositoryImpl.getMovies(page, apiKey)){
-            it
+        return moviesRepositoryImpl.getMovies(page, apiKey).apply {
+//            for transformation
         }
     }
 }

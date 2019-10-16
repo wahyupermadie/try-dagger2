@@ -1,5 +1,5 @@
 package com.wepe.trydagger.base
 
-interface BaseView {
-    fun setupPresenter(presenter: BasePresenter<*>)
+interface BaseView  {
+    fun showProgressBar(state: Boolean)
 }

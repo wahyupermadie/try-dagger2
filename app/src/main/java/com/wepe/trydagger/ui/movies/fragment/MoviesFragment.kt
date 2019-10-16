@@ -20,9 +20,7 @@ import com.wepe.trydagger.databinding.FragmentMoviesBinding
 import com.wepe.trydagger.ui.movies.adapter.MoviesAdapter
 import com.wepe.trydagger.ui.movies.detail.DetailMovieActivity
 import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
@@ -50,15 +48,12 @@ class MoviesFragment : BaseFragment(), MoviesContract.View{
         super.onAttach(context)
     }
 
-    override fun setupPresenter(presenter: BasePresenter<*>) {
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        moviePresenter.onAttachView(this)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MoviesViewModel::class.java)
         binding = FragmentMoviesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
@@ -77,35 +72,26 @@ class MoviesFragment : BaseFragment(), MoviesContract.View{
     }
 
     private fun initData() {
-//        viewModel.getMovies(1)
-//        viewModel.movies.observe(viewLifecycleOwner, Observer {
-//            if (it != null){
-//                it.results?.forEach {results ->
-//                    mAdapter.addData(results)
-//                }
-//                mAdapter.notifyDataSetChanged()
-//            }
-//        })
+        moviePresenter.getMovies(1, BuildConfig.API_KEY)
     }
 
     private fun initUi() {
-//        mAdapter = MoviesAdapter(arrayListOf()){
-//            startActivity<DetailMovieActivity>("movies" to it)
-//        }
-//
-//        binding.rvMovies.apply {
-//            this.adapter = mAdapter
-//            this.layoutManager = LinearLayoutManager(context)
-//        }
+        mAdapter = MoviesAdapter(arrayListOf()){
+            startActivity<DetailMovieActivity>("movies" to it)
+        }
 
-        moviePresenter.getMovies(1, BuildConfig.API_KEY)
-
+        binding.rvMovies.apply {
+            this.adapter = mAdapter
+            this.layoutManager = LinearLayoutManager(context)
+        }
 
     }
 
     override fun onMoviesSuccess(responseMovies: ResponseMovies) {
-        toast("Hello "+responseMovies.toString())
-        Log.d(MoviesFragment::class.java.simpleName, responseMovies.toString())
+        responseMovies.results?.forEach {
+            mAdapter.addData(it)
+        }
+        mAdapter.notifyDataSetChanged()
     }
 
     override fun onMoviesError(message: String) {

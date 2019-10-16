@@ -24,7 +24,6 @@ class MoviesRepositoryImpl @Inject constructor(
     override suspend fun getMovies(page: Int, apiKey: String) : LiveData<Resource<ResponseMovies>>{
             val response = apiService.getPopularMovies(apiKey, page)
             withContext(Dispatchers.Main) {
-                Log.d("DATA_GUEX ","HELLO BOSKUX"+response.body())
                 try {
                     if (response.isSuccessful) {
                         moviesResource.value = Resource.success(response.body())
@@ -37,7 +36,6 @@ class MoviesRepositoryImpl @Inject constructor(
                     moviesResource.value = Resource.error("Ooops: Something else went wrong", response.body())
                 }
             }
-        Log.d("DATA_GUEX ","HELLO BOSKUX"+moviesResource.value)
         return moviesResource
     }
 }
