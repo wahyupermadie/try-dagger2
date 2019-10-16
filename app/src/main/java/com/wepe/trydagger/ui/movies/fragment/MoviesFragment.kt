@@ -2,30 +2,19 @@ package com.wepe.trydagger.ui.movies.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.wepe.trydagger.BuildConfig
 import com.wepe.trydagger.MainApplication
 import com.wepe.trydagger.base.BaseFragment
-import com.wepe.trydagger.base.BasePresenter
-import com.wepe.trydagger.base.BaseViewModel
 import com.wepe.trydagger.data.model.ResponseMovies
 import com.wepe.trydagger.databinding.FragmentMoviesBinding
 import com.wepe.trydagger.ui.movies.adapter.MoviesAdapter
 import com.wepe.trydagger.ui.movies.detail.DetailMovieActivity
-import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
-import kotlinx.coroutines.*
 import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
-import kotlin.coroutines.coroutineContext
 
 class MoviesFragment : BaseFragment(), MoviesContract.View{
     @Inject

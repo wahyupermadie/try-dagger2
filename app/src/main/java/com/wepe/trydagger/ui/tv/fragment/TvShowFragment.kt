@@ -5,20 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.wepe.trydagger.BuildConfig
 import com.wepe.trydagger.MainApplication
 import com.wepe.trydagger.base.BaseFragment
-import com.wepe.trydagger.base.BaseViewModel
 import com.wepe.trydagger.data.model.ResponseTv
 import com.wepe.trydagger.databinding.FragmentTvShowBinding
 import com.wepe.trydagger.ui.tv.adapter.TvShowAdapter
 import com.wepe.trydagger.ui.tv.detail.DetailTvShowActivity
-import com.wepe.trydagger.ui.tv.viewmodel.TvShowViewModel
 import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 

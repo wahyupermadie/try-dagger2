@@ -2,7 +2,6 @@ package com.wepe.trydagger.di.module
 
 import com.wepe.trydagger.di.scope.ActivityScope
 import com.wepe.trydagger.ui.movies.detail.DetailMovieActivity
-import com.wepe.trydagger.ui.movies.module.DetailMoviesModule
 import com.wepe.trydagger.ui.tv.detail.DetailTvShowActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -11,7 +10,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuilder {
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [(DetailMoviesModule::class)])
+    @ContributesAndroidInjector
     internal abstract fun bindDetailMoviesActivity(): DetailMovieActivity
 
     @ActivityScope

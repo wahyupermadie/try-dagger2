@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable name="viewModel" type="com.wepe.trydagger.ui.tv.viewmodel.TvShowDetailVM"/>
+        <variable name="tvItems" type="com.wepe.trydagger.data.model.ResultsTv"/>
     </data>
     <ScrollView
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <androidx.appcompat.widget.Toolbar
-                    app:title="@{viewModel.tvShow.originalName}"
+                    app:title="@{tvItems.originalName}"
                     app:titleTextColor="@color/colorAccent"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
@@ -31,7 +31,7 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
-                app:srcImage='@{String.format("%s",viewModel.tvShow.posterPath)}'
+                app:srcImage='@{String.format("%s",tvItems.posterPath)}'
                 android:layout_width="150dp"
                 android:layout_height="200dp"
                 tools:srcCompat="@tools:sample/avatars"
@@ -60,7 +60,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="@{viewModel.tvShow.originalName}"
+                android:text="@{tvItems.originalName}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView2"
@@ -81,7 +81,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:textDate="@{viewModel.tvShow.firstAirDate}"
+                app:textDate="@{tvItems.firstAirDate}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView4"
@@ -105,7 +105,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 />
             <androidx.appcompat.widget.AppCompatTextView
-                android:text="@{viewModel.tvShow.overview}"
+                android:text="@{tvItems.overview}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView6"

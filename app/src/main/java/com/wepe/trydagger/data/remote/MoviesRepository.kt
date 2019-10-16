@@ -1,14 +1,11 @@
 package com.wepe.trydagger.data.remote
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.wepe.trydagger.data.model.ResponseMovies
 import com.wepe.trydagger.data.network.ApiService
 import com.wepe.trydagger.utils.Resource
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import javax.inject.Inject

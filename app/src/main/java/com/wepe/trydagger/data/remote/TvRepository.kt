@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.wepe.trydagger.data.model.ResponseTv
 import com.wepe.trydagger.data.network.ApiService
 import com.wepe.trydagger.utils.Resource
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import javax.inject.Inject

@@ -1,8 +1,6 @@
 package com.wepe.trydagger.domain
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import com.wepe.trydagger.data.model.ResponseMovies
 import com.wepe.trydagger.data.remote.MoviesRepositoryImpl
 import com.wepe.trydagger.utils.Resource

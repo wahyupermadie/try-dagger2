@@ -1,6 +1,5 @@
 package com.wepe.trydagger.ui.tv.fragment
 
-import com.wepe.trydagger.base.BasePresenter
 import com.wepe.trydagger.base.BaseView
 import com.wepe.trydagger.data.model.ResponseTv
 import kotlinx.coroutines.Job

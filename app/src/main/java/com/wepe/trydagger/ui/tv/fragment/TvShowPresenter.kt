@@ -1,15 +1,15 @@
 package com.wepe.trydagger.ui.tv.fragment
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.wepe.trydagger.base.BasePresenter
 import com.wepe.trydagger.data.model.ResponseTv
-import com.wepe.trydagger.domain.MoviesDomain
 import com.wepe.trydagger.domain.TvDomain
 import com.wepe.trydagger.utils.Resource
-import kotlinx.coroutines.*
-import okhttp3.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 

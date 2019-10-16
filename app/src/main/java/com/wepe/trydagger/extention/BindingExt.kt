@@ -13,7 +13,7 @@ object BindingExt {
     fun setImage(view : AppCompatImageView, url : String){
         Glide.with(view.context)
             .asBitmap()
-            .thumbnail(0.1f)
+            .thumbnail(2.5f)
             .load(Constants.IMAGE_URL+url)
             .into(view)
     }
