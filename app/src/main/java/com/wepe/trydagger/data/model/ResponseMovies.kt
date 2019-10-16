@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class ResponseMovies(
 
 	@field:SerializedName("page")
-	val page: Int? = null,
+    var page: Int? = null,
 
 	@field:SerializedName("total_pages")
 	val totalPages: Int? = null,

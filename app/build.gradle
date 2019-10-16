@@ -8,7 +8,6 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion Versions.compiledSdk
-    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId ApplicationId.id
         minSdkVersion Versions.minSdk
@@ -61,6 +60,7 @@ dependencies {
     implementation AndroidLibraries.httpLoggingInterceptor
     implementation AndroidLibraries.gson
     implementation AndroidLibraries.coroutine
+    implementation AndroidLibraries.coroutineAndroid
 
     implementation AndroidLibraries.material
     implementation AndroidLibraries.rxRoom

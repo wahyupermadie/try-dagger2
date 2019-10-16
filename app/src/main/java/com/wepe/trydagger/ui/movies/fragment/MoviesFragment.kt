@@ -5,26 +5,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.wepe.trydagger.BuildConfig
 import com.wepe.trydagger.MainApplication
 import com.wepe.trydagger.base.BaseFragment
-import com.wepe.trydagger.base.BaseViewModel
+import com.wepe.trydagger.data.model.ResponseMovies
 import com.wepe.trydagger.databinding.FragmentMoviesBinding
 import com.wepe.trydagger.ui.movies.adapter.MoviesAdapter
 import com.wepe.trydagger.ui.movies.detail.DetailMovieActivity
-import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
+import dagger.android.AndroidInjection
 import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 
-class MoviesFragment : BaseFragment(){
-
+class MoviesFragment : BaseFragment(), MoviesContract.View{
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var moviePresenter: MoviesPresenter
+
     private lateinit var binding : FragmentMoviesBinding
-    private lateinit var viewModel: MoviesViewModel
     private lateinit var mAdapter: MoviesAdapter
     companion object {
 
@@ -32,24 +29,21 @@ class MoviesFragment : BaseFragment(){
             return MoviesFragment()
         }
     }
-    override fun onAttach(context: Context) {
-        (activity?.application as MainApplication).appComponent.inject(this)
-        super.onAttach(context)
-    }
+
+//    override fun onAttach(context: Context) {
+//        (activity?.application as MainApplication).appComponent.inject(this)
+//        super.onAttach(context)
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MoviesViewModel::class.java)
+        moviePresenter.onAttachView(this)
         binding = FragmentMoviesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
-    }
-
-    override fun getViewModel(): BaseViewModel {
-        return viewModel
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -60,15 +54,7 @@ class MoviesFragment : BaseFragment(){
     }
 
     private fun initData() {
-        viewModel.getMovies(1)
-        viewModel.movies.observe(viewLifecycleOwner, Observer {
-            if (it != null){
-                it.results?.forEach {results ->
-                    mAdapter.addData(results)
-                }
-                mAdapter.notifyDataSetChanged()
-            }
-        })
+        moviePresenter.getMovies(1, BuildConfig.API_KEY)
     }
 
     private fun initUi() {
@@ -81,5 +67,12 @@ class MoviesFragment : BaseFragment(){
             this.layoutManager = LinearLayoutManager(context)
         }
 
+    }
+
+    override fun onMoviesSuccess(responseMovies: ResponseMovies) {
+        responseMovies.results?.forEach {
+            mAdapter.addData(it)
+        }
+        mAdapter.notifyDataSetChanged()
     }
 }
