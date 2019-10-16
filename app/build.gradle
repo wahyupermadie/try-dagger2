@@ -61,6 +61,7 @@ dependencies {
     implementation AndroidLibraries.httpLoggingInterceptor
     implementation AndroidLibraries.gson
     implementation AndroidLibraries.coroutine
+    implementation AndroidLibraries.coroutineAndroid
 
     implementation AndroidLibraries.material
     implementation AndroidLibraries.rxRoom

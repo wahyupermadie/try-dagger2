@@ -1,5 +1,6 @@
 package com.wepe.trydagger.data.remote
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.wepe.trydagger.data.model.ResponseMovies
@@ -21,9 +22,9 @@ class MoviesRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ): MoviesRepository {
     override suspend fun getMovies(page: Int, apiKey: String) : LiveData<Resource<ResponseMovies>>{
-        CoroutineScope(Dispatchers.IO).launch {
             val response = apiService.getPopularMovies(apiKey, page)
             withContext(Dispatchers.Main) {
+                Log.d("DATA_GUEX ","HELLO BOSKUX"+response.body())
                 try {
                     if (response.isSuccessful) {
                         moviesResource.value = Resource.success(response.body())
@@ -36,7 +37,7 @@ class MoviesRepositoryImpl @Inject constructor(
                     moviesResource.value = Resource.error("Ooops: Something else went wrong", response.body())
                 }
             }
-        }
+        Log.d("DATA_GUEX ","HELLO BOSKUX"+moviesResource.value)
         return moviesResource
     }
 }

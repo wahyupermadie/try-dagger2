@@ -14,8 +14,8 @@ abstract class BaseFragment : Fragment(){
     abstract fun getViewModel() : BaseViewModel
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dialog = indeterminateProgressDialog("Fething data...", "Please wait")
-        dialog.setCancelable(false)
+//        dialog = indeterminateProgressDialog("Fething data...", "Please wait")
+//        dialog.setCancelable(false)
         setupObserver(getViewModel())
     }
 
@@ -28,12 +28,12 @@ abstract class BaseFragment : Fragment(){
             }
         })
 
-        viewModel.loadingHandler.observe(viewLifecycleOwner, Observer {
-            if (it){
-                dialog.show()
-            }else{
-                dialog.dismiss()
-            }
-        })
+//        viewModel.loadingHandler.observe(viewLifecycleOwner, Observer {
+//            if (it){
+//                dialog.show()
+//            }else{
+//                dialog.dismiss()
+//            }
+//        })
     }
 }
