@@ -6,8 +6,8 @@ object Versions {
     const val kotlin_version = "1.3.50"
     const val gradleVersion = "3.5.0"
     const val minSdk = 19
-    const val compiledSdk = 29
-    const val targetSdk = 29
+    const val compiledSdk = 28
+    const val targetSdk = 28
     const val versionCode = 1
     const val coreKtx = "1.1.0"
     const val constraintLayout = "1.1.3"
