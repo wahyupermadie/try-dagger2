@@ -90,18 +90,19 @@ class MoviesTest {
     @Test
     fun `load data error`() {
         val exception = NetworkErrorException()
+        moviesLiveData.value = Resource(
+            status = Resource.Status.ERROR,
+            data = null,
+            error = "Connection Error"
+        )
         every {
             runBlocking {
                 moviesDomain.fetchMovies(1, "123456")
             }
         } throws exception andThen {
-            moviesLiveData.value = Resource(
-                status = Resource.Status.ERROR,
-                data = null,
-                error = "Connection Error"
-            )
             moviesLiveData
         }
+
 
         assertNotNull(moviesLiveData)
         assertEquals("Connection Error", moviesLiveData.value?.error)
