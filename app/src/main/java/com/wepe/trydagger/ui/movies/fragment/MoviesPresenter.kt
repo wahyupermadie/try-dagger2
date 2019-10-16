@@ -31,7 +31,7 @@ class MoviesPresenter @Inject constructor(
                     view?.showProgressBar(false)
                 }
                 Resource.Status.ERROR -> {
-                    movies.value?.error?.let { view?.onMoviesError(it) }
+                    movies.value?.error?.let { view?.showError(it) }
                     view?.showProgressBar(false)
                 }
             }

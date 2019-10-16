@@ -8,8 +8,6 @@ interface MoviesContract {
 
     interface View : BaseView {
         fun onMoviesSuccess(responseMovies: ResponseMovies)
-        fun onMoviesError(message: String)
-        fun onMoviesLoading(loadingState: Boolean)
     }
 
     interface Presenter {

@@ -10,8 +10,8 @@ import javax.inject.Inject
 class TvDomain @Inject constructor(private val tvRepositoryImpl: TvRepositoryImpl){
 
     suspend fun fetchTv(page : Int, apiKey: String) : LiveData<Resource<ResponseTv>> {
-        return Transformations.map(tvRepositoryImpl.getPopularTv(page, apiKey)){
-            it
+        return tvRepositoryImpl.getPopularTv(page, apiKey).apply {
+//            for transformation soon
         }
     }
 }

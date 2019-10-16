@@ -70,9 +70,4 @@ dependencies {
     kapt AndroidLibraries.glideCompiler
 
     implementation AndroidLibraries.anko
-    kotlin {
-        experimental {
-            coroutines "enable"
-        }
-    }
 }

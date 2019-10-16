@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.wepe.trydagger.BuildConfig
 import com.wepe.trydagger.MainApplication
 import com.wepe.trydagger.base.BaseFragment
@@ -27,14 +28,10 @@ import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
 class MoviesFragment : BaseFragment(), MoviesContract.View{
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
     lateinit var moviePresenter: MoviesPresenter
 
     private lateinit var binding : FragmentMoviesBinding
-    private lateinit var viewModel: MoviesViewModel
     private lateinit var mAdapter: MoviesAdapter
     companion object {
 
@@ -54,14 +51,9 @@ class MoviesFragment : BaseFragment(), MoviesContract.View{
         savedInstanceState: Bundle?
     ): View? {
         moviePresenter.onAttachView(this)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MoviesViewModel::class.java)
         binding = FragmentMoviesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
-    }
-
-    override fun getViewModel(): BaseViewModel {
-        return viewModel
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -92,13 +84,5 @@ class MoviesFragment : BaseFragment(), MoviesContract.View{
             mAdapter.addData(it)
         }
         mAdapter.notifyDataSetChanged()
-    }
-
-    override fun onMoviesError(message: String) {
-        Log.d(MoviesFragment::class.java.simpleName, message)
-    }
-
-    override fun onMoviesLoading(loadingState: Boolean) {
-        Log.d(MoviesFragment::class.java.simpleName, loadingState.toString())
     }
 }

@@ -7,34 +7,15 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.wepe.trydagger.extention.showSnackbar
 import org.jetbrains.anko.support.v4.indeterminateProgressDialog
+import org.jetbrains.anko.support.v4.toast
 
 abstract class BaseFragment : Fragment(), BaseView{
     private lateinit var dialog : ProgressDialog
-
-    abstract fun getViewModel() : BaseViewModel
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dialog = indeterminateProgressDialog("Fething data...", "Please wait")
         dialog.setCancelable(false)
-        setupObserver(getViewModel())
-    }
-
-    private fun setupObserver(viewModel: BaseViewModel) {
-        viewModel.errorHandler.observe(viewLifecycleOwner, Observer { event ->
-            event.getContentIfNotHandled()?.let {
-                showSnackbar(
-                    it.message ?: "Terjadi kesalahan pada sistem",
-                Snackbar.LENGTH_LONG)
-            }
-        })
-
-        viewModel.loadingHandler.observe(viewLifecycleOwner, Observer {
-            if (it){
-                dialog.show()
-            }else{
-                dialog.dismiss()
-            }
-        })
+        dialog.dismiss()
     }
 
     override fun showProgressBar(state: Boolean) {
@@ -42,5 +23,11 @@ abstract class BaseFragment : Fragment(), BaseView{
             dialog.show()
         else
             dialog.dismiss()
+    }
+
+    override fun showError(message: String?) {
+        showSnackbar(
+            message ?: "Terjadi kesalahan pada sistem",
+            Snackbar.LENGTH_LONG)
     }
 }
