@@ -14,9 +14,19 @@ import com.wepe.trydagger.R
 import com.wepe.trydagger.databinding.ActivityMainBinding
 import com.wepe.trydagger.ui.movies.fragment.MoviesFragment
 import com.wepe.trydagger.ui.tv.fragment.TvShowFragment
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
-    BottomNavigationView.OnNavigationItemSelectedListener {
+    BottomNavigationView.OnNavigationItemSelectedListener, HasAndroidInjector{
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
+    override fun androidInjector(): AndroidInjector<Any> {
+        return dispatchingAndroidInjector
+    }
 
     private lateinit var binding : ActivityMainBinding
     private val fragments = listOf(
@@ -25,6 +35,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.toolbarProfile)

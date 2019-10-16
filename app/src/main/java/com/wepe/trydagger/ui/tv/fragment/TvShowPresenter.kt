@@ -19,8 +19,9 @@ class TvShowPresenter @Inject constructor(
 ) : BasePresenter<TvShowContract.View>(), TvShowContract.Presenter, CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
-    private var tvShow : LiveData<Resource<ResponseTv>> = MutableLiveData()
+    var tvShow : LiveData<Resource<ResponseTv>> = MutableLiveData()
     override fun fetchTvShow(page: Int, apiKey: String) = CoroutineScope(coroutineContext).launch {
+
         view?.showProgressBar(true)
         withContext(Dispatchers.IO){
             tvShow = tvShowDomain.fetchTv(page, apiKey)

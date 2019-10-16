@@ -22,6 +22,7 @@ class MoviesPresenter @Inject constructor(
     private var movies : LiveData<Resource<ResponseMovies>> = MutableLiveData()
     override fun getMovies(page: Int, apiKey: String) = CoroutineScope(coroutineContext).launch{
             view?.showProgressBar(true)
+
             withContext(Dispatchers.IO) {
                 movies = moviesDomain.fetchMovies(page, apiKey)
             }

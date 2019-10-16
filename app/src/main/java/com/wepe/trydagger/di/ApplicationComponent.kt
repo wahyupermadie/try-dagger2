@@ -16,7 +16,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [(AndroidInjectionModule::class),
     (ActivityBuilder::class),
-    (FragmentBuilder::class),
     (NetworkModule::class),
     (AppModule::class)])
 interface ApplicationComponent {
@@ -29,6 +28,4 @@ interface ApplicationComponent {
     }
 
     fun inject(app: MainApplication)
-    fun inject(moviesFragment: MoviesFragment)
-    fun inject(tvShowFragment: TvShowFragment)
 }

@@ -2,9 +2,11 @@ package com.wepe.trydagger.ui.tv.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wepe.trydagger.BuildConfig
 import com.wepe.trydagger.MainApplication
@@ -28,11 +30,6 @@ class TvShowFragment : BaseFragment(), TvShowContract.View {
         }
     }
 
-    override fun onAttach(context: Context) {
-        (activity?.application as MainApplication).appComponent.inject(this)
-        super.onAttach(context)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,6 +45,11 @@ class TvShowFragment : BaseFragment(), TvShowContract.View {
         responseTv.results?.forEach {tv ->
             mAdapter.addData(tv)
         }
+
+        presenter.tvShow.observe(viewLifecycleOwner, Observer {
+            Log.d("DATA_GUE","DATA "+it.data)
+        })
+
         mAdapter.notifyDataSetChanged()
     }
 

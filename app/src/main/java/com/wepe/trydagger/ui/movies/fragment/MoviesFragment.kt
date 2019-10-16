@@ -13,6 +13,7 @@ import com.wepe.trydagger.data.model.ResponseMovies
 import com.wepe.trydagger.databinding.FragmentMoviesBinding
 import com.wepe.trydagger.ui.movies.adapter.MoviesAdapter
 import com.wepe.trydagger.ui.movies.detail.DetailMovieActivity
+import dagger.android.AndroidInjection
 import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 
@@ -29,10 +30,10 @@ class MoviesFragment : BaseFragment(), MoviesContract.View{
         }
     }
 
-    override fun onAttach(context: Context) {
-        (activity?.application as MainApplication).appComponent.inject(this)
-        super.onAttach(context)
-    }
+//    override fun onAttach(context: Context) {
+//        (activity?.application as MainApplication).appComponent.inject(this)
+//        super.onAttach(context)
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
