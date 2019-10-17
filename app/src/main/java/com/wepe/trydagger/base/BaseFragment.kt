@@ -5,8 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import com.wepe.trydagger.extention.showSnackbar
-import dagger.android.AndroidInjection
+import com.wepe.trydagger.external.extention.showSnackbar
 import dagger.android.support.AndroidSupportInjection
 import org.jetbrains.anko.support.v4.indeterminateProgressDialog
 

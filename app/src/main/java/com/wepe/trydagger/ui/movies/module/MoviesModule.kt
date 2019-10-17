@@ -4,6 +4,7 @@ import com.wepe.trydagger.data.network.ApiService
 import com.wepe.trydagger.data.remote.MoviesRepositoryImpl
 import com.wepe.trydagger.di.scope.FragmentScope
 import com.wepe.trydagger.domain.MoviesDomain
+import com.wepe.trydagger.external.AppContextCoroutineProvider
 import com.wepe.trydagger.ui.movies.fragment.MoviesContract
 import com.wepe.trydagger.ui.movies.fragment.MoviesFragment
 import com.wepe.trydagger.ui.movies.fragment.MoviesPresenter
@@ -14,7 +15,8 @@ import dagger.Provides
 class MoviesModule {
     @Provides
     @FragmentScope
-    fun moviesRepository(apiService: ApiService): MoviesRepositoryImpl = MoviesRepositoryImpl(apiService)
+    fun moviesRepository(apiService: ApiService): MoviesRepositoryImpl =
+        MoviesRepositoryImpl(apiService)
 
     @Provides
     @FragmentScope
@@ -28,6 +30,8 @@ class MoviesModule {
 
     @Provides
     @FragmentScope
-    fun moviesPresenter(moviesDomain: MoviesDomain): MoviesPresenter = MoviesPresenter(moviesDomain)
-
+    fun moviesPresenter(
+        moviesDomain: MoviesDomain,
+        appContextCoroutineProvider: AppContextCoroutineProvider
+    ): MoviesPresenter = MoviesPresenter(moviesDomain, appContextCoroutineProvider)
 }
