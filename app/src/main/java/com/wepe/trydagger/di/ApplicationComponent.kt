@@ -4,10 +4,7 @@ import android.app.Application
 import com.wepe.trydagger.MainApplication
 import com.wepe.trydagger.di.module.ActivityBuilder
 import com.wepe.trydagger.di.module.AppModule
-import com.wepe.trydagger.di.module.FragmentBuilder
 import com.wepe.trydagger.di.module.NetworkModule
-import com.wepe.trydagger.ui.movies.fragment.MoviesFragment
-import com.wepe.trydagger.ui.tv.fragment.TvShowFragment
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

@@ -8,11 +8,9 @@ import com.wepe.trydagger.domain.MoviesDomain
 import com.wepe.trydagger.external.ContextCoroutineProvider
 import com.wepe.trydagger.utils.Resource
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 
 class MoviesPresenter @Inject constructor(

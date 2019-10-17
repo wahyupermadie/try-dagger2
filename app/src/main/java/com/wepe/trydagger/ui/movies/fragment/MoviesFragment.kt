@@ -1,19 +1,16 @@
 package com.wepe.trydagger.ui.movies.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wepe.trydagger.BuildConfig
-import com.wepe.trydagger.MainApplication
 import com.wepe.trydagger.base.BaseFragment
 import com.wepe.trydagger.data.model.ResponseMovies
 import com.wepe.trydagger.databinding.FragmentMoviesBinding
 import com.wepe.trydagger.ui.movies.adapter.MoviesAdapter
 import com.wepe.trydagger.ui.movies.detail.DetailMovieActivity
-import dagger.android.AndroidInjection
 import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 
@@ -29,11 +26,6 @@ class MoviesFragment : BaseFragment(), MoviesContract.View{
             return MoviesFragment()
         }
     }
-
-//    override fun onAttach(context: Context) {
-//        (activity?.application as MainApplication).appComponent.inject(this)
-//        super.onAttach(context)
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
