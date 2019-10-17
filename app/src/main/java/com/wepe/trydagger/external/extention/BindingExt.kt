@@ -1,4 +1,4 @@
-package com.wepe.trydagger.extention
+package com.wepe.trydagger.external.extention
 
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView

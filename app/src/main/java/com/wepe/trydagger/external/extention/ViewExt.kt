@@ -1,4 +1,4 @@
-package com.wepe.trydagger.extention
+package com.wepe.trydagger.external.extention
 
 import android.view.View
 import androidx.fragment.app.Fragment

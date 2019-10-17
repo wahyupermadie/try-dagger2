@@ -5,25 +5,23 @@ import androidx.lifecycle.MutableLiveData
 import com.wepe.trydagger.base.BasePresenter
 import com.wepe.trydagger.data.model.ResponseTv
 import com.wepe.trydagger.domain.TvDomain
+import com.wepe.trydagger.external.ContextCoroutineProvider
 import com.wepe.trydagger.utils.Resource
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 
 class TvShowPresenter @Inject constructor(
-    private val tvShowDomain: TvDomain
-) : BasePresenter<TvShowContract.View>(), TvShowContract.Presenter, CoroutineScope {
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main
+    private val tvShowDomain: TvDomain,
+    private val coroutineContextProvider: ContextCoroutineProvider
+) : BasePresenter<TvShowContract.View>(), TvShowContract.Presenter {
     var tvShow : LiveData<Resource<ResponseTv>> = MutableLiveData()
-    override fun fetchTvShow(page: Int, apiKey: String) = CoroutineScope(coroutineContext).launch {
+    override fun fetchTvShow(page: Int, apiKey: String) = CoroutineScope(coroutineContextProvider.uiDispatcher()).launch {
 
         view?.showProgressBar(true)
-        withContext(Dispatchers.IO){
+        withContext(coroutineContextProvider.bgDispatcher()){
             tvShow = tvShowDomain.fetchTv(page, apiKey)
         }
         when(tvShow.value?.status){

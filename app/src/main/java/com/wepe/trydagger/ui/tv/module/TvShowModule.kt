@@ -4,6 +4,7 @@ import com.wepe.trydagger.data.network.ApiService
 import com.wepe.trydagger.data.remote.TvRepositoryImpl
 import com.wepe.trydagger.di.scope.FragmentScope
 import com.wepe.trydagger.domain.TvDomain
+import com.wepe.trydagger.external.AppContextCoroutineProvider
 import com.wepe.trydagger.ui.tv.fragment.TvShowPresenter
 import dagger.Module
 import dagger.Provides
@@ -20,5 +21,5 @@ class TvShowModule {
 
     @Provides
     @FragmentScope
-    fun tvPresenter(tvDomain: TvDomain) : TvShowPresenter = TvShowPresenter(tvDomain)
+    fun tvPresenter(tvDomain: TvDomain, appContextCoroutineProvider: AppContextCoroutineProvider) : TvShowPresenter = TvShowPresenter(tvDomain, appContextCoroutineProvider)
 }

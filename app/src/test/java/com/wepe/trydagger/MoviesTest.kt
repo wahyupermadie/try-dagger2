@@ -3,6 +3,9 @@ package com.wepe.trydagger
 import android.accounts.NetworkErrorException
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
 import com.wepe.trydagger.data.model.ResponseMovies
 import com.wepe.trydagger.domain.MoviesDomain
 import com.wepe.trydagger.resource.ResponseFakeMovies.FAKE_MOVIES
@@ -23,72 +26,67 @@ import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import com.wepe.trydagger.utils.TestContextCoroutineProvider
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert
 
-
-@RunWith(MockitoJUnitRunner::class)
 class MoviesTest {
 
+    private var moviesView = mock<MoviesContract.View>()
+    private var moviesDomain: MoviesDomain = mock()
+    private lateinit var testDispatcher: TestContextCoroutineProvider
+    private var moviesLiveData = MutableLiveData<Resource<ResponseMovies>>()
+    lateinit var presenter: MoviesPresenter
+
     @get:Rule
-    open var instantTaskExecutorRule = InstantTaskExecutorRule()
+    val rule = InstantTaskExecutorRule()
 
-    private var moviesView = mockk<MoviesContract.View>()
 
-    @ObsoleteCoroutinesApi
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
-
-    private var presenter = mockk<MoviesPresenter>(relaxed = true)
-
-    private var moviesDomain = mockk<MoviesDomain>(relaxed = true)
-
-    private var moviesLiveData: MutableLiveData<Resource<ResponseMovies>> = MutableLiveData()
-
-    @ObsoleteCoroutinesApi
-    @ExperimentalCoroutinesApi
     @Before
-    fun setUp(){
-        MockitoAnnotations.initMocks(this)
-        Dispatchers.setMain(mainThreadSurrogate)
+    fun `Setup`() {
+        testDispatcher = TestContextCoroutineProvider()
+        presenter = MoviesPresenter(moviesDomain, testDispatcher)
         presenter.onAttachView(moviesView)
     }
 
-    @ExperimentalCoroutinesApi
-    @ObsoleteCoroutinesApi
-    @After
-    fun tearDown(){
-        Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
-        mainThreadSurrogate.close()
-    }
-
     @Test
-    fun `load data movies`() {
-        every{
-            runBlocking {
-                moviesDomain.fetchMovies(1, "123456")
-            }
-        } returns moviesLiveData
-
+    fun `Load data movies`() = runBlocking {
         moviesLiveData.value = Resource(Resource.Status.SUCCESS, FAKE_MOVIES, "")
-        assertNotNull(moviesLiveData.value)
-        assertEquals(Resource.Status.SUCCESS, moviesLiveData.value?.status)
+
+        launch(testDispatcher.uiDispatcher()) {
+
+            doReturn(moviesLiveData)
+                .`when`(moviesDomain)
+                .fetchMovies(1, "123456")
+
+        }
+        presenter.getMovies(1, "123456")
+
+        verify(moviesView).showProgressBar(true)
+        Assert.assertEquals(moviesDomain.fetchMovies(1, "123456"), moviesLiveData)
+        Assert.assertEquals(Resource.Status.SUCCESS, moviesLiveData.value?.status)
+        Assert.assertEquals(FAKE_MOVIES, moviesLiveData.value?.data)
     }
 
     @Test
     fun `load data error`() {
-        val exception = NetworkErrorException()
         moviesLiveData.value = Resource(
             status = Resource.Status.ERROR,
             data = null,
             error = "Connection Error"
         )
-        every {
-            runBlocking {
-                moviesDomain.fetchMovies(1, "123456")
-            }
-        } throws exception andThen {
-            moviesLiveData
+        runBlocking {
+            moviesDomain.fetchMovies(1, "123456")
+            doReturn(moviesLiveData)
+                .`when`(moviesDomain)
+                .fetchMovies(1, "123456")
         }
 
-
+        presenter.getMovies(1, "123456")
+        verify(moviesView).showProgressBar(true)
+        verify(moviesView).showError(moviesLiveData.value?.error)
+        verify(moviesView).showProgressBar(false)
         assertNotNull(moviesLiveData)
         assertEquals("Connection Error", moviesLiveData.value?.error)
     }

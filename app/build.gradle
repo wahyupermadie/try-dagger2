@@ -82,4 +82,6 @@ dependencies {
     kapt AndroidLibraries.glideCompiler
 
     implementation AndroidLibraries.anko
+
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
 }
