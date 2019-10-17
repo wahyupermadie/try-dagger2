@@ -1,4 +1,4 @@
-# Dagger Android Starter
+# Dagger Android Starter Using MVP Pattern & RxJava
 
 # WORK IN PROGRESS
 

@@ -31,7 +31,7 @@ abstract class BaseFragment : Fragment(), BaseView{
 
     override fun showError(message: String?) {
         showSnackbar(
-            message ?: "Terjadi kesalahan pada sistem",
+            message ?: "An error occurred.",
             Snackbar.LENGTH_LONG)
     }
 }
