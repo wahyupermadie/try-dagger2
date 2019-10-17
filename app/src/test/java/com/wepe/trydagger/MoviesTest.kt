@@ -77,13 +77,13 @@ class MoviesTest {
             error = "Connection Error"
         )
         runBlocking {
-            moviesDomain.fetchMovies(1, "12345")
+            moviesDomain.fetchMovies(1, "123456")
             doReturn(moviesLiveData)
                 .`when`(moviesDomain)
-                .fetchMovies(1, "12345")
+                .fetchMovies(1, "123456")
         }
 
-        presenter.getMovies(1, "12345")
+        presenter.getMovies(1, "123456")
         verify(moviesView).showProgressBar(true)
         verify(moviesView).showError(moviesLiveData.value?.error)
         verify(moviesView).showProgressBar(false)
