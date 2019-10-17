@@ -2,7 +2,6 @@ package com.wepe.trydagger.resource
 
 import com.wepe.trydagger.data.model.ResponseMovies
 import com.wepe.trydagger.data.model.ResponseTv
-import com.wepe.trydagger.data.model.ResultsMovies
 
 object ResponseFakeMovies {
 

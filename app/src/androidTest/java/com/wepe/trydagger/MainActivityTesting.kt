@@ -10,9 +10,8 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
-import com.wepe.trydagger.ui.MainActivity
 import com.wepe.trydagger.R.id.*
-import com.wepe.trydagger.ui.movies.fragment.MoviesFragment
+import com.wepe.trydagger.ui.MainActivity
 import com.wepe.trydagger.utils.DataBindingIdlingResourceRule
 import org.junit.Before
 import org.junit.Rule

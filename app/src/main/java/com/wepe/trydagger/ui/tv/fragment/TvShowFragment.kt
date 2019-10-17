@@ -1,6 +1,5 @@
 package com.wepe.trydagger.ui.tv.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wepe.trydagger.BuildConfig
-import com.wepe.trydagger.MainApplication
 import com.wepe.trydagger.base.BaseFragment
 import com.wepe.trydagger.data.model.ResponseTv
 import com.wepe.trydagger.databinding.FragmentTvShowBinding
@@ -45,10 +43,6 @@ class TvShowFragment : BaseFragment(), TvShowContract.View {
         responseTv.results?.forEach {tv ->
             mAdapter.addData(tv)
         }
-
-        presenter.tvShow.observe(viewLifecycleOwner, Observer {
-            Log.d("DATA_GUE","DATA "+it.data)
-        })
 
         mAdapter.notifyDataSetChanged()
     }
