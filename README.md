@@ -1,6 +1,6 @@
 # Dagger Android Starter Using MVP Pattern & RxJava
 
-# WORK IN PROGRESS
+[![CircleCI](https://circleci.com/gh/wahyupermadie/try-dagger2/tree/master.svg?style=svg)](https://circleci.com/gh/wahyupermadie/try-dagger2/tree/master)
 
 ## TODO
 * Write Unit test and Instrumental test
