@@ -1,4 +1,4 @@
-# Dagger Android Starter
+# Dagger Android Starter Using MVP Pattern & RxJava
 
 [![CircleCI](https://circleci.com/gh/wahyupermadie/try-dagger2/tree/master.svg?style=svg)](https://circleci.com/gh/wahyupermadie/try-dagger2/tree/master)
 
