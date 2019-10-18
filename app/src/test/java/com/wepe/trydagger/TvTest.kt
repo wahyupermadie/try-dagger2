@@ -1,6 +1,5 @@
 package com.wepe.trydagger
 
-import android.accounts.NetworkErrorException
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.nhaarman.mockitokotlin2.doReturn
@@ -13,18 +12,14 @@ import com.wepe.trydagger.ui.tv.fragment.TvShowContract
 import com.wepe.trydagger.ui.tv.fragment.TvShowPresenter
 import com.wepe.trydagger.utils.Resource
 import com.wepe.trydagger.utils.TestContextCoroutineProvider
-import io.mockk.every
-import io.mockk.mockk
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
