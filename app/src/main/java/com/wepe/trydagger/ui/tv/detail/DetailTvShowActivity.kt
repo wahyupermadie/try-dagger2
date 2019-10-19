@@ -15,7 +15,7 @@ class DetailTvShowActivity : AppCompatActivity() {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_tv_show)
-        binding.lifecycleOwner = this
+//        binding.lifecycleOwner = this
 
         initUi()
         initData()
@@ -29,7 +29,7 @@ class DetailTvShowActivity : AppCompatActivity() {
     private fun initData() {
         val tvShow = intent.getParcelableExtra<ResultsTv>("tvShow")
         tvShow?.let {
-            binding.tvItems = it
+            binding.tvShow = it
         }
     }
 
