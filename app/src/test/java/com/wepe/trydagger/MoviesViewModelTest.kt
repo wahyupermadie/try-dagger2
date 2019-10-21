@@ -1,51 +1,75 @@
 package com.wepe.trydagger
 
-import android.os.Build
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProviders
-import com.wepe.trydagger.resource.ResponseMovies.FAKE_MOVIES
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import com.wepe.trydagger.data.model.ResponseMovies
+import com.wepe.trydagger.domain.MoviesDomain
 import com.wepe.trydagger.ui.movies.module.MoviesModule
 import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
-import com.wepe.trydagger.viewmodeltest.base.BaseTest
+import com.wepe.trydagger.utils.Resource
+import com.wepe.trydagger.utils.ResponseFakeMovies.FAKE_MOVIES
+import com.wepe.trydagger.utils.TestCoroutineProvider
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.Robolectric
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
-import java.net.HttpURLConnection
+import org.mockito.Mockito.*
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
-@RunWith(RobolectricTestRunner::class)
-@Config(sdk = [Build.VERSION_CODES.O_MR1])
-class MoviesViewModelTest : BaseTest(){
-    // FOR DATA
-    private lateinit var activity: FragmentActivity
+class MoviesViewModelTest {
+
     private lateinit var viewModel: MoviesViewModel
+    private lateinit var testDispatcher: TestCoroutineProvider
+    private val domain : MoviesDomain = mock(MoviesDomain::class.java)
+    private var moviesLiveData = MutableLiveData<Resource<ResponseMovies>>()
 
-    override fun isMockServerEnabled(): Boolean = true
-
-    override fun getRepoModule(): Any = MoviesModule::class
+    @get:Rule
+    val rule = InstantTaskExecutorRule()
 
     @Before
-    override fun setUp(){
-        super.setUp()
-        this.activity = Robolectric.setupActivity(FragmentActivity::class.java)
-        this.viewModel = ViewModelProviders.of(this.activity, viewModelFactory)[MoviesViewModel::class.java]
+    fun setUp(){
+        testDispatcher = TestCoroutineProvider()
+        viewModel = MoviesViewModel(domain, testDispatcher)
     }
 
     // TESTS
     @Test
-    fun getUser_whenSuccess() {
-        // Prepare data
-        this.mockHttpResponse("movies_data.json", HttpURLConnection.HTTP_OK)
-        this.viewModel.getMovies(1)
-        // Pre-test
-        assertEquals(null, this.viewModel.movies.value, "User should be null because stream not started yet")
-        // Execute View Model
-        this.viewModel.getMovies(1)
-        // Checks
-        assertEquals(FAKE_MOVIES, this.viewModel.movies.value, "User must be fetched")
+    fun getMovies_whenSuccess() {
+        runBlocking {
+            moviesLiveData.value = Resource(Resource.Status.SUCCESS, FAKE_MOVIES, "")
+            launch(testDispatcher.uiThread()) {
+
+                doReturn(moviesLiveData)
+                    .`when`(domain)
+                    .fetchMovies(1, BuildConfig.API_KEY)
+
+            }
+        }
+        viewModel.getMovies(1)
+        assertNotNull(moviesLiveData)
+        assertEquals(FAKE_MOVIES, moviesLiveData.value?.data)
     }
 
+    // TESTS
+    @Test
+    fun getMovies_whenError() {
+        runBlocking {
+            moviesLiveData.value = Resource(Resource.Status.ERROR, null, "Connection Error")
+            print(moviesLiveData.value?.data)
+            launch(testDispatcher.uiThread()) {
+
+                doReturn(moviesLiveData)
+                    .`when`(domain)
+                    .fetchMovies(1, BuildConfig.API_KEY)
+
+            }
+        }
+        viewModel.getMovies(1)
+        assertNotNull(moviesLiveData)
+        assertEquals(null, moviesLiveData.value?.data)
+        assertEquals("Connection Error", moviesLiveData.value?.error)
+    }
 }

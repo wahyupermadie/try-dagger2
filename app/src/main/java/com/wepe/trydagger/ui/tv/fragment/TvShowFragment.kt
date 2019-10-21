@@ -31,11 +31,6 @@ class TvShowFragment : BaseFragment() {
         }
     }
 
-    override fun onAttach(context: Context) {
-        (activity?.application as MainApplication).appComponent.inject(this)
-        super.onAttach(context)
-    }
-
     override fun getViewModel(): BaseViewModel {
         return viewModel
     }

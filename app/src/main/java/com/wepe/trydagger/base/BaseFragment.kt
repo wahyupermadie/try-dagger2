@@ -1,11 +1,13 @@
 package com.wepe.trydagger.base
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.wepe.trydagger.extention.showSnackbar
+import dagger.android.support.AndroidSupportInjection
 import org.jetbrains.anko.support.v4.indeterminateProgressDialog
 
 abstract class BaseFragment : Fragment(){
@@ -19,6 +21,10 @@ abstract class BaseFragment : Fragment(){
         setupObserver(getViewModel())
     }
 
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
     private fun setupObserver(viewModel: BaseViewModel) {
         viewModel.errorHandler.observe(viewLifecycleOwner, Observer { event ->
             event.getContentIfNotHandled()?.let {

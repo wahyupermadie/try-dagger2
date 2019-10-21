@@ -8,16 +8,15 @@ import com.wepe.trydagger.BuildConfig
 import com.wepe.trydagger.base.BaseViewModel
 import com.wepe.trydagger.data.model.ResponseMovies
 import com.wepe.trydagger.domain.MoviesDomain
-import com.wepe.trydagger.utils.ErrorHandler
-import com.wepe.trydagger.utils.Event
-import com.wepe.trydagger.utils.Resource
+import com.wepe.trydagger.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MoviesViewModel @Inject constructor(
-    private val moviesDomain: MoviesDomain
+    private val moviesDomain: MoviesDomain,
+    private val coroutineContextProvider: CoroutinesContextProvider
 ) : BaseViewModel(){
 
     private val _movies = MediatorLiveData<ResponseMovies>()
@@ -25,11 +24,11 @@ class MoviesViewModel @Inject constructor(
 
     private var moviesSource: LiveData<Resource<ResponseMovies>> = MutableLiveData<Resource<ResponseMovies>>()
 
-    fun getMovies(page : Int) = viewModelScope.launch(Dispatchers.Main){
+    fun getMovies(page : Int) = viewModelScope.launch(coroutineContextProvider.uiThread()){
         _loadingHandler.value = true
         _movies.postValue(null)
         _movies.removeSource(moviesSource)
-        withContext(Dispatchers.IO){
+        withContext(coroutineContextProvider.bgThread()){
             moviesSource = moviesDomain.fetchMovies(page, BuildConfig.API_KEY)
         }
         _movies.addSource(moviesSource){

@@ -32,10 +32,6 @@ class MoviesFragment : BaseFragment(){
             return MoviesFragment()
         }
     }
-    override fun onAttach(context: Context) {
-        (activity?.application as MainApplication).appComponent.inject(this)
-        super.onAttach(context)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
