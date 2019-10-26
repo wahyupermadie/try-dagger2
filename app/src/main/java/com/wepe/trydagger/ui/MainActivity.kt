@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.lifecycleOwner = this
         setSupportActionBar(binding.toolbarProfile)
         binding.nsvpContent.addOnPageChangeListener(this)
         binding.nsvpContent.adapter = ViewPagerAdapter(supportFragmentManager)

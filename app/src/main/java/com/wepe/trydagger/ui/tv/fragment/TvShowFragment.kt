@@ -1,6 +1,5 @@
 package com.wepe.trydagger.ui.tv.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +8,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.wepe.trydagger.MainApplication
 import com.wepe.trydagger.base.BaseFragment
 import com.wepe.trydagger.base.BaseViewModel
 import com.wepe.trydagger.databinding.FragmentTvShowBinding
 import com.wepe.trydagger.ui.tv.adapter.TvShowAdapter
 import com.wepe.trydagger.ui.tv.detail.DetailTvShowActivity
 import com.wepe.trydagger.ui.tv.viewmodel.TvShowViewModel
+import com.wepe.trydagger.utils.EspressoIdlingResource
 import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 
@@ -57,7 +56,7 @@ class TvShowFragment : BaseFragment() {
         viewModel.getTvShow(1)
         viewModel.tvShow.observe(viewLifecycleOwner, Observer {
             it?.let {
-                it.results?.forEach {tv ->
+                it.forEach {tv ->
                     mAdapter.addData(tv)
                 }
             }

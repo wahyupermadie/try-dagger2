@@ -3,19 +3,23 @@ package com.wepe.trydagger
 import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
+import com.wepe.trydagger.R.id.*
 import com.wepe.trydagger.ui.MainActivity
 import com.wepe.trydagger.utils.DataBindingIdlingResourceRule
+import com.wepe.trydagger.utils.EspressoIdlingResource
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import com.wepe.trydagger.R.id.*
+
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
@@ -27,13 +31,18 @@ class MainActivityTest {
     val dataBindingIdlingResourceRule = DataBindingIdlingResourceRule(activityRule)
 
     @Before
-    fun setUp(){
+    fun setUp() {
         activityRule.launchActivity(Intent())
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResourceForMainActivity())
+    }
+
+    @After
+    fun tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getEspressoIdlingResourceForMainActivity())
     }
 
     @Test
     fun mainTesting(){
-        delay()
 
         onView(withId(rv_movies)).check(matches(isDisplayed()))
         onView(withId(rv_movies)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(5))
@@ -48,8 +57,6 @@ class MainActivityTest {
 
     @Test
     fun detailActivityTesting(){
-        delay()
-
 
         onView(withId(movies_menu)).perform(ViewActions.click())
         onView(withId(rv_movies)).check(matches(isDisplayed()))
@@ -80,11 +87,4 @@ class MainActivityTest {
         onView(withId(textView6)).check(matches(isDisplayed()))
     }
 
-    private fun delay(){
-        try {
-            Thread.sleep(5000)
-        }catch (e : InterruptedException){
-            e.printStackTrace()
-        }
-    }
 }

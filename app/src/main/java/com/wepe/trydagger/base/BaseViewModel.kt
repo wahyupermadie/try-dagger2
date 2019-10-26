@@ -12,7 +12,7 @@ abstract class BaseViewModel : ViewModel(){
     protected val _errorHandler = MutableLiveData<Event<ErrorHandler>>()
     val errorHandler: LiveData<Event<ErrorHandler>> get() = _errorHandler
 
-    protected val _loadingHandler = MutableLiveData<Boolean>()
+    protected val _loadingHandler = MutableLiveData<Boolean>(false)
     val loadingHandler: LiveData<Boolean> get() = _loadingHandler
 
 }

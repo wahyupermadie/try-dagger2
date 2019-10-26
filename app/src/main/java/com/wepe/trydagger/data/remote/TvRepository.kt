@@ -1,42 +1,50 @@
 package com.wepe.trydagger.data.remote
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.wepe.trydagger.data.database.TvShowDao
 import com.wepe.trydagger.data.model.ResponseTv
+import com.wepe.trydagger.data.model.ResultsTv
 import com.wepe.trydagger.data.network.ApiService
+import com.wepe.trydagger.utils.Constants
 import com.wepe.trydagger.utils.Resource
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.HttpException
+import retrofit2.Response
 import javax.inject.Inject
 
 interface TvRepository{
-    suspend fun getPopularTv(page: Int, apiKey: String) : LiveData<Resource<ResponseTv>>
+    suspend fun getPopularTv(page: Int, apiKey: String) : LiveData<Resource<List<ResultsTv>>>
 }
 
 private val tvResource = MutableLiveData<Resource<ResponseTv>>()
 class TvRepositoryImpl @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val gson: Gson,
+    private val tvShowDao: TvShowDao,
+    private val context: Context
 ) : TvRepository{
-    override suspend fun getPopularTv(page: Int, apiKey: String): LiveData<Resource<ResponseTv>> {
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = apiService.getPopularTv(apiKey, page)
-            withContext(Dispatchers.Main) {
-                try {
-                    if (response.isSuccessful) {
-                        tvResource.value = Resource.success(response.body())
-                    } else {
-                        tvResource.value = Resource.error("Error code "+response.code().toString(), response.body())
+    override suspend fun getPopularTv(page: Int, apiKey: String): LiveData<Resource<List<ResultsTv>>> {
+        return object : NetworkBoundResource<List<ResultsTv>, ResponseTv>(gson) {
+            override suspend fun saveCallResult(item: ResponseTv) {
+                item.let {
+                    it.results?.forEach {tv ->
+                        tvShowDao.insert(tv)
                     }
-                } catch (e: HttpException) {
-                    tvResource.value = Resource.error("Exception ${e.message}", response.body())
-                } catch (e: Throwable) {
-                    tvResource.value = Resource.error("Ooops: Something else went wrong", response.body())
                 }
             }
-        }
-        return tvResource
+
+            override fun shouldFetch(data: List<ResultsTv>?): Boolean {
+                return Constants.isConnected(context)
+            }
+
+            override suspend fun loadFromDb(): List<ResultsTv> {
+                return tvShowDao.getTvShow()
+            }
+
+            override suspend fun createCallAsync(): Response<ResponseTv> {
+                return apiService.getPopularTv(apiKey, page)
+            }
+        }.build().asLiveData()
     }
 }

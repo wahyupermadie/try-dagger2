@@ -17,6 +17,8 @@ object Constants {
         return newSdf.format(date!!)
     }
 
+    const val TIMEOUT: Long = 60
+
     fun isConnected(ctx: Context?) : Boolean {
         val connectivityManager = ctx?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

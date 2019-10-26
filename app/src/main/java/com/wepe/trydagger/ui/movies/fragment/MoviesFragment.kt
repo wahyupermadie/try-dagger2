@@ -1,6 +1,5 @@
 package com.wepe.trydagger.ui.movies.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +8,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.wepe.trydagger.MainApplication
 import com.wepe.trydagger.base.BaseFragment
 import com.wepe.trydagger.base.BaseViewModel
 import com.wepe.trydagger.databinding.FragmentMoviesBinding
 import com.wepe.trydagger.ui.movies.adapter.MoviesAdapter
 import com.wepe.trydagger.ui.movies.detail.DetailMovieActivity
 import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
+import com.wepe.trydagger.utils.EspressoIdlingResource
 import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 
@@ -59,7 +58,7 @@ class MoviesFragment : BaseFragment(){
         viewModel.getMovies(1)
         viewModel.movies.observe(viewLifecycleOwner, Observer {
             if (it != null){
-                it.results?.forEach {results ->
+                it.forEach {results ->
                     mAdapter.addData(results)
                 }
                 mAdapter.notifyDataSetChanged()

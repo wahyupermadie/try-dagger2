@@ -1,42 +1,47 @@
 package com.wepe.trydagger.data.remote
 
+import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.wepe.trydagger.data.database.MoviesDao
 import com.wepe.trydagger.data.model.ResponseMovies
+import com.wepe.trydagger.data.model.ResultsMovies
 import com.wepe.trydagger.data.network.ApiService
+import com.wepe.trydagger.utils.Constants
 import com.wepe.trydagger.utils.Resource
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.HttpException
+import retrofit2.Response
 import javax.inject.Inject
 
 interface MoviesRepository{
-    suspend fun getMovies(page: Int, apiKey: String) : LiveData<Resource<ResponseMovies>>
+    suspend fun getMovies(page: Int, apiKey: String) : LiveData<Resource<List<ResultsMovies>>>
 }
-
-private var moviesResource = MutableLiveData<Resource<ResponseMovies>>()
 class MoviesRepositoryImpl @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val gson: Gson,
+    private val moviesDao: MoviesDao,
+    private val context: Context
 ): MoviesRepository {
-    override suspend fun getMovies(page: Int, apiKey: String) : LiveData<Resource<ResponseMovies>>{
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = apiService.getPopularMovies(apiKey, page)
-            withContext(Dispatchers.Main) {
-                try {
-                    if (response.isSuccessful) {
-                        moviesResource.value = Resource.success(response.body())
-                    } else {
-                        moviesResource.value = Resource.error("Error code "+response.code().toString(), response.body())
+    override suspend fun getMovies(page: Int, apiKey: String) : LiveData<Resource<List<ResultsMovies>>>{
+        return object : NetworkBoundResource<List<ResultsMovies>, ResponseMovies>(gson) {
+            override suspend fun saveCallResult(item: ResponseMovies) {
+                item.let {
+                    it.results?.forEach {movie ->
+                        moviesDao.insert(movie)
                     }
-                } catch (e: HttpException) {
-                    moviesResource.value = Resource.error("Exception ${e.message}", response.body())
-                } catch (e: Throwable) {
-                    moviesResource.value = Resource.error("Ooops: Something else went wrong", response.body())
                 }
             }
-        }
-        return moviesResource
+
+            override fun shouldFetch(data: List<ResultsMovies>?): Boolean {
+                return Constants.isConnected(context)
+            }
+
+            override suspend fun loadFromDb(): List<ResultsMovies> {
+                return moviesDao.getMovies()
+            }
+
+            override suspend fun createCallAsync(): Response<ResponseMovies> {
+                return apiService.getPopularMovies(apiKey, page)
+            }
+        }.build().asLiveData()
     }
 }

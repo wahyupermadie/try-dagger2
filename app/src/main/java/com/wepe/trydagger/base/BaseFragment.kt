@@ -18,6 +18,7 @@ abstract class BaseFragment : Fragment(){
         super.onActivityCreated(savedInstanceState)
         dialog = indeterminateProgressDialog("Fething data...", "Please wait")
         dialog.setCancelable(false)
+        dialog.dismiss()
         setupObserver(getViewModel())
     }
 

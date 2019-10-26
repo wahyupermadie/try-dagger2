@@ -4,18 +4,17 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.wepe.trydagger.data.model.ResponseMovies
 import com.wepe.trydagger.domain.MoviesDomain
-import com.wepe.trydagger.ui.movies.module.MoviesModule
 import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
 import com.wepe.trydagger.utils.Resource
 import com.wepe.trydagger.utils.ResponseFakeMovies.FAKE_MOVIES
 import com.wepe.trydagger.utils.TestCoroutineProvider
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.mock
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 

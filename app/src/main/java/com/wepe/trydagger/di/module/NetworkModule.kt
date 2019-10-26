@@ -1,18 +1,18 @@
 package com.wepe.trydagger.di.module
 
-import android.os.SystemClock
 import android.util.Log
 import com.google.gson.Gson
 import com.wepe.trydagger.BuildConfig
 import com.wepe.trydagger.data.network.ApiService
+import com.wepe.trydagger.utils.Constants.TIMEOUT
 import dagger.Module
 import dagger.Provides
 import okhttp3.Dispatcher
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -31,16 +31,14 @@ class NetworkModule {
         val dispatcher = Dispatcher()
         dispatcher.maxRequests = 1
 
-        val interceptor = Interceptor { chain ->
-            SystemClock.sleep(1000)
-            chain.proceed(chain.request())
-        }
-
         httpInterceptor.level = HttpLoggingInterceptor.Level.BASIC
 
         return OkHttpClient.Builder().addInterceptor(httpInterceptor)
-            .addNetworkInterceptor(interceptor)
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
             .dispatcher(dispatcher)
+            .retryOnConnectionFailure(true)
             .build()
     }
 
