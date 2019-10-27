@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagedList
 import com.wepe.trydagger.BuildConfig
 import com.wepe.trydagger.base.BaseViewModel
+import com.wepe.trydagger.data.database.TvShowDao
 import com.wepe.trydagger.data.model.ResultsTv
 import com.wepe.trydagger.domain.TvDomain
 import com.wepe.trydagger.utils.*
@@ -15,11 +17,15 @@ import javax.inject.Inject
 
 class TvShowViewModel @Inject constructor(
     private val tvDomain: TvDomain,
-    private val coroutineAppContext: CoroutinesContextProvider
+    private val coroutineAppContext: CoroutinesContextProvider,
+    private val tvShowDao: TvShowDao
+
 ) : BaseViewModel(){
 
     private val _tvShow = MediatorLiveData<List<ResultsTv>>()
     val tvShow : LiveData<List<ResultsTv>> = _tvShow
+
+    val tvPaged : LiveData<PagedList<ResultsTv>> get() = tvDomain.fetchTvShowLocal()
 
     private var tvShowSource: LiveData<Resource<List<ResultsTv>>> = MutableLiveData<Resource<List<ResultsTv>>>()
 

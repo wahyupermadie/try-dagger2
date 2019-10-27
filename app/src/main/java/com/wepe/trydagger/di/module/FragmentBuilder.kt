@@ -1,6 +1,8 @@
 package com.wepe.trydagger.di.module
 
 import com.wepe.trydagger.di.scope.FragmentScope
+import com.wepe.trydagger.ui.favorite.movies.MoviesFavoriteFragment
+import com.wepe.trydagger.ui.favorite.tvShow.TvShowFavoriteFragment
 import com.wepe.trydagger.ui.movies.fragment.MoviesFragment
 import com.wepe.trydagger.ui.movies.module.MoviesModule
 import com.wepe.trydagger.ui.tv.fragment.TvShowFragment
@@ -18,4 +20,12 @@ abstract class FragmentBuilder {
     @FragmentScope
     @ContributesAndroidInjector(modules = [(TvShowModule::class)])
     internal abstract fun bindTvShowFragment(): TvShowFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [MoviesModule::class])
+    internal abstract fun bindFavMoviesFragment() : MoviesFavoriteFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [TvShowModule::class])
+    internal abstract fun bindTvShowFavoriteFragment() : TvShowFavoriteFragment
 }

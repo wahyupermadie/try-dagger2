@@ -2,7 +2,6 @@ package com.wepe.trydagger.ui.tv.module
 
 import android.content.Context
 import com.google.gson.Gson
-import com.wepe.trydagger.data.database.LocalDatabase
 import com.wepe.trydagger.data.database.TvShowDao
 import com.wepe.trydagger.data.network.ApiService
 import com.wepe.trydagger.data.remote.TvRepositoryImpl
@@ -21,8 +20,4 @@ class TvShowModule {
     @Provides
     @FragmentScope
     fun tvDomain(repository: TvRepositoryImpl): TvDomain = TvDomain(repository)
-
-    @Provides
-    @FragmentScope
-    fun moviesDao(localDatabase: LocalDatabase) : TvShowDao = localDatabase.tvShowDao()
 }

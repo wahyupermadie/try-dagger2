@@ -2,6 +2,7 @@ package com.wepe.trydagger
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
+import com.wepe.trydagger.data.database.MoviesDao
 import com.wepe.trydagger.data.model.ResponseMovies
 import com.wepe.trydagger.domain.MoviesDomain
 import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
@@ -24,14 +25,14 @@ class MoviesViewModelTest {
     private lateinit var testDispatcher: TestCoroutineProvider
     private val domain : MoviesDomain = mock(MoviesDomain::class.java)
     private var moviesLiveData = MutableLiveData<Resource<ResponseMovies>>()
-
+    private var moviesDao : MoviesDao = mock(MoviesDao::class.java)
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
     @Before
     fun setUp(){
         testDispatcher = TestCoroutineProvider()
-        viewModel = MoviesViewModel(domain, testDispatcher)
+        viewModel = MoviesViewModel(domain, testDispatcher, moviesDao)
     }
 
     // TESTS
@@ -69,6 +70,44 @@ class MoviesViewModelTest {
         viewModel.getMovies(1)
         assertNotNull(moviesLiveData)
         assertEquals(null, moviesLiveData.value?.data)
+        assertEquals("Connection Error", moviesLiveData.value?.error)
+    }
+
+    @Test
+    fun getMovies_local() {
+        runBlocking {
+            moviesLiveData.value = Resource(Resource.Status.ERROR, FAKE_MOVIES, "Connection Error")
+            print(moviesLiveData.value?.data)
+            launch(testDispatcher.uiThread()) {
+
+                doReturn(moviesLiveData)
+                    .`when`(domain)
+                    .fetchMoviesLocal()
+
+            }
+        }
+        viewModel.moviesPaged
+        assertNotNull(moviesLiveData)
+        assertEquals(FAKE_MOVIES, moviesLiveData.value?.data)
+        assertEquals("Connection Error", moviesLiveData.value?.error)
+    }
+
+    @Test
+    fun getMovies_SingleLocal() {
+        runBlocking {
+            moviesLiveData.value = Resource(Resource.Status.ERROR, FAKE_MOVIES, "Connection Error")
+            print(moviesLiveData.value?.data)
+            launch(testDispatcher.uiThread()) {
+
+                doReturn(moviesLiveData)
+                    .`when`(domain)
+                    .fetchSingleLocalMovie(1)
+
+            }
+        }
+        viewModel.getMovies(1)
+        assertNotNull(moviesLiveData)
+        assertEquals(FAKE_MOVIES, moviesLiveData.value?.data)
         assertEquals("Connection Error", moviesLiveData.value?.error)
     }
 }

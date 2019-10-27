@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.wepe.trydagger.di.viewmodel.ViewModelFactory
 import com.wepe.trydagger.di.viewmodel.ViewModelKey
+import com.wepe.trydagger.ui.favorite.movies.MoviesFavoriteVM
+import com.wepe.trydagger.ui.favorite.tvShow.TvShowFavVM
 import com.wepe.trydagger.ui.movies.viewmodel.DetailMoviesVM
 import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
 import com.wepe.trydagger.ui.tv.viewmodel.TvShowDetailVM
@@ -36,4 +38,14 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(TvShowDetailVM::class)
     abstract fun provideTvShowDetailViewModel(tvShowDetailVM: TvShowDetailVM) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MoviesFavoriteVM::class)
+    abstract fun provideMoviesFavViewModel(moviesFavVM : MoviesFavoriteVM) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TvShowFavVM::class)
+    abstract fun provideTvShowFavViewModel(tvShowFavVM : TvShowFavVM) : ViewModel
 }

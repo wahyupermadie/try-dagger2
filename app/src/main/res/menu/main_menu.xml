@@ -11,4 +11,8 @@
         android:icon="@drawable/ic_tv"
         android:title="@string/tv_show_label" />
 
+    <item android:id="@+id/favorite_menu"
+        android:icon="@drawable/ic_favorite"
+        android:title="Favorite"/>
+
 </menu>

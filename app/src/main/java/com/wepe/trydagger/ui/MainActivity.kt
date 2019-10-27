@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.wepe.trydagger.R
 import com.wepe.trydagger.databinding.ActivityMainBinding
+import com.wepe.trydagger.ui.favorite.FragmentFavorite
 import com.wepe.trydagger.ui.movies.fragment.MoviesFragment
 import com.wepe.trydagger.ui.tv.fragment.TvShowFragment
 import dagger.android.AndroidInjection
@@ -28,7 +29,8 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
     private lateinit var binding : ActivityMainBinding
     private val fragments = listOf(
         MoviesFragment.newInstance(),
-        TvShowFragment.newInstance()
+        TvShowFragment.newInstance(),
+        FragmentFavorite.newInstance()
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +67,10 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
                 supportActionBar?.title = getString(R.string.tv_show_label)
                 binding.navigation.selectedItemId = 1
             }
+            2 -> {
+                supportActionBar?.title = getString(R.string.lbl_favorite)
+                binding.navigation.selectedItemId = 2
+            }
             else -> {
                 supportActionBar?.title = getString(R.string.movies_label)
                 binding.navigation.selectedItemId = 0
@@ -79,6 +85,9 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener,
             }
             R.id.tv_menu->{
                 binding.nsvpContent.currentItem = 1
+            }
+            R.id.favorite_menu->{
+                binding.nsvpContent.currentItem = 2
             }
         }
         return true

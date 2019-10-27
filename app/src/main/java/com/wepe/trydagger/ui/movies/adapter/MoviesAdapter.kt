@@ -1,12 +1,10 @@
 package com.wepe.trydagger.ui.movies.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wepe.trydagger.R
 import com.wepe.trydagger.data.model.ResultsMovies

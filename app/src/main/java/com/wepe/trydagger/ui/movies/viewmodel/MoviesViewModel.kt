@@ -1,14 +1,10 @@
 package com.wepe.trydagger.ui.movies.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Config
-import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import androidx.paging.toLiveData
 import com.wepe.trydagger.BuildConfig
 import com.wepe.trydagger.base.BaseViewModel
 import com.wepe.trydagger.data.database.MoviesDao
@@ -28,7 +24,7 @@ class MoviesViewModel @Inject constructor(
     private val _movies = MediatorLiveData<List<ResultsMovies>>()
     val movies : LiveData<List<ResultsMovies>> get() = _movies
 
-    val moviesPaged : LiveData<PagedList<ResultsMovies>> get() = moviesDao.getMovies().toLiveData(Config(5))
+    val moviesPaged : LiveData<PagedList<ResultsMovies>> get() = moviesDomain.fetchMoviesLocal()
 
     private var moviesSource: LiveData<Resource<List<ResultsMovies>>> = MutableLiveData<Resource<List<ResultsMovies>>>()
 
@@ -45,6 +41,9 @@ class MoviesViewModel @Inject constructor(
                 Resource.Status.SUCCESS -> {
                     _movies.value = it.data
                     _loadingHandler.value = false
+                    if (!EspressoIdlingResource.getEspressoIdlingResourceForMainActivity().isIdleNow){
+                        EspressoIdlingResource.decrement()
+                    }
                 }
                 Resource.Status.ERROR -> {
                     _errorHandler.value = Event(ErrorHandler(it.error, ErrorHandler.ErrorType.SNACKBAR))
@@ -56,4 +55,5 @@ class MoviesViewModel @Inject constructor(
             }
         }
     }
+
 }

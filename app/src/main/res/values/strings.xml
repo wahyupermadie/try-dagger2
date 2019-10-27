@@ -6,4 +6,6 @@
     <string name="lbl_release_date_default">Release Date</string>
     <string name="lbl_overview">Overview</string>
     <string name="lbl_trailers">Trailers</string>
+    <string name="lbl_favorite">Favorite</string>
+    <string name="favorite">Favorite</string>
 </resources>

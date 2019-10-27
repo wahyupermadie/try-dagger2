@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <androidx.appcompat.widget.Toolbar
-                    app:title="@{viewModel.tvShow.originalName}"
+                    android:title="@{viewModel.tvShow.originalName}"
                     app:titleTextColor="@color/colorAccent"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"

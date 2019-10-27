@@ -1,4 +1,4 @@
-package com.wepe.trydagger.ui.movies.fragment
+package com.wepe.trydagger.ui.favorite.movies
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,26 +12,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.wepe.trydagger.base.BaseFragment
 import com.wepe.trydagger.base.BaseViewModel
 import com.wepe.trydagger.data.model.ResultsMovies
-import com.wepe.trydagger.databinding.FragmentMoviesBinding
+import com.wepe.trydagger.databinding.FragmentFavMoviesBinding
 import com.wepe.trydagger.ui.movies.adapter.MoviesAdapter
 import com.wepe.trydagger.ui.movies.detail.DetailMovieActivity
-import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
 import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 
-
-class MoviesFragment : BaseFragment(){
+class MoviesFavoriteFragment : BaseFragment(){
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var binding : FragmentMoviesBinding
-    private lateinit var viewModel: MoviesViewModel
-    private lateinit var mAdapter: MoviesAdapter
-    companion object {
+    private lateinit var binding : FragmentFavMoviesBinding
+    private lateinit var mAdapter : MoviesAdapter
+    private val viewModel by lazy {
+        ViewModelProviders.of(this, viewModelFactory).get(MoviesFavoriteVM::class.java)
+    }
 
-        fun newInstance() : MoviesFragment {
-            return MoviesFragment()
-        }
+    companion object{
+        fun newInstance() = MoviesFavoriteFragment()
     }
 
     override fun onCreateView(
@@ -39,8 +37,7 @@ class MoviesFragment : BaseFragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MoviesViewModel::class.java)
-        binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        binding = FragmentFavMoviesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -56,25 +53,19 @@ class MoviesFragment : BaseFragment(){
         initData()
     }
 
-    private fun initData() {
-        viewModel.getMovies(1)
-        viewModel.movies.observe(viewLifecycleOwner, Observer {
-
-        })
-
-        viewModel.moviesPaged.observe(viewLifecycleOwner, moviesObserver)
-    }
-
     private fun initUi() {
         mAdapter = MoviesAdapter{
             startActivity<DetailMovieActivity>("movies" to it)
         }
 
-        binding.rvMovies.apply {
+        binding.rvFavMovies.apply {
             this.adapter = mAdapter
             this.layoutManager = LinearLayoutManager(context)
         }
+    }
 
+    private fun initData() {
+        viewModel.pagedMovies.observe(viewLifecycleOwner, moviesObserver)
     }
 
     private val moviesObserver =

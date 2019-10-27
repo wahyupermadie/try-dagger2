@@ -3,15 +3,15 @@ package com.wepe.trydagger.ui.tv.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.wepe.trydagger.R
 import com.wepe.trydagger.data.model.ResultsTv
 import com.wepe.trydagger.databinding.TvShowItemBinding
 
-class TvShowAdapter(private var resultsItem: MutableList<ResultsTv>?, private val listener : (ResultsTv) -> Unit) : RecyclerView.Adapter<TvShowAdapter.ViewHolder>() {
-    fun addData(list: ResultsTv){
-        resultsItem?.add(list)
-    }
+class TvShowAdapter(private val listener : (ResultsTv) -> Unit) :
+    PagedListAdapter<ResultsTv, TvShowAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = DataBindingUtil.inflate<TvShowItemBinding>(
@@ -23,12 +23,8 @@ class TvShowAdapter(private var resultsItem: MutableList<ResultsTv>?, private va
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.items = resultsItem?.get(position)
-        holder.bindItem(resultsItem?.get(position), listener)
-    }
-
-    override fun getItemCount(): Int {
-        return if(resultsItem?.size == null) 0 else resultsItem!!.size
+        holder.binding.items = getItem(position)
+        holder.bindItem(getItem(position), listener)
     }
 
     class ViewHolder(val binding: TvShowItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -36,6 +32,19 @@ class TvShowAdapter(private var resultsItem: MutableList<ResultsTv>?, private va
             itemView.rootView.setOnClickListener {
                 resultsItem?.let { it1 -> listener(it1) }
             }
+        }
+    }
+
+    companion object {
+        private val DIFF_CALLBACK = object :
+            DiffUtil.ItemCallback<ResultsTv>() {
+            // Concert details may have changed if reloaded from the database,
+            // but ID is fixed.
+            override fun areItemsTheSame(oldConcert: ResultsTv,
+                                         newConcert: ResultsTv) = oldConcert.id == newConcert.id
+
+            override fun areContentsTheSame(oldConcert: ResultsTv,
+                                            newConcert: ResultsTv) = oldConcert == newConcert
         }
     }
 }

@@ -2,6 +2,7 @@ package com.wepe.trydagger
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
+import com.wepe.trydagger.data.database.TvShowDao
 import com.wepe.trydagger.data.model.ResponseTv
 import com.wepe.trydagger.domain.TvDomain
 import com.wepe.trydagger.ui.tv.viewmodel.TvShowViewModel
@@ -24,14 +25,14 @@ class TvShowVMTest {
     private lateinit var testDispatcher: TestCoroutineProvider
     private val domain : TvDomain = mock(TvDomain::class.java)
     private var tvLiveData = MutableLiveData<Resource<ResponseTv>>()
-
+    private val tvShowDao : TvShowDao = mock(TvShowDao::class.java)
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
     @Before
     fun setUp(){
         testDispatcher = TestCoroutineProvider()
-        viewModel = TvShowViewModel(domain, testDispatcher)
+        viewModel = TvShowViewModel(domain, testDispatcher, tvShowDao)
     }
 
     // TESTS
@@ -57,7 +58,6 @@ class TvShowVMTest {
     fun getMovies_whenError() {
         runBlocking {
             tvLiveData.value = Resource(Resource.Status.ERROR, null, "Connection Error")
-            print(tvLiveData.value?.data)
             launch(testDispatcher.uiThread()) {
 
                 doReturn(tvLiveData)
@@ -70,5 +70,39 @@ class TvShowVMTest {
         assertNotNull(tvLiveData)
         assertEquals(null, tvLiveData.value?.data)
         assertEquals("Connection Error", tvLiveData.value?.error)
+    }
+
+    @Test
+    fun getMovies_local() {
+        runBlocking {
+            tvLiveData.value = Resource(Resource.Status.SUCCESS, FAKE_TV, "")
+            launch(testDispatcher.uiThread()) {
+
+                doReturn(tvLiveData)
+                    .`when`(domain)
+                    .fetchTvShowLocal()
+
+            }
+        }
+        viewModel.tvPaged
+        assertNotNull(tvLiveData)
+        assertEquals(FAKE_TV, tvLiveData.value?.data)
+    }
+
+    @Test
+    fun getMovies_singleLocal() {
+        runBlocking {
+            tvLiveData.value = Resource(Resource.Status.SUCCESS, FAKE_TV, "")
+            launch(testDispatcher.uiThread()) {
+
+                doReturn(tvLiveData)
+                    .`when`(domain)
+                    .fetchSingleLocalTvShow(1)
+
+            }
+        }
+        viewModel.getTvShow(1)
+        assertNotNull(tvLiveData)
+        assertEquals(FAKE_TV, tvLiveData.value?.data)
     }
 }
