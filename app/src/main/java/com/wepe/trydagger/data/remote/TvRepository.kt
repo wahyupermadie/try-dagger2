@@ -38,9 +38,6 @@ class TvRepositoryImpl @Inject constructor(
                 return Constants.isConnected(context)
             }
 
-            override suspend fun loadFromDb(): List<ResultsTv> {
-                return tvShowDao.getTvShow()
-            }
 
             override suspend fun createCallAsync(): Response<ResponseTv> {
                 return apiService.getPopularTv(apiKey, page)

@@ -22,16 +22,16 @@ abstract class NetworkBoundResource<ResultType, RequestType>(
             Resource.loading(null)
         }
         CoroutineScope(coroutineContext).launch(supervisorJob){
-            val dbResult = loadFromDb()
+            val dbResult = null
             if (shouldFetch(dbResult)){
                 try {
                     fetchFromNetwork(dbResult)
                 } catch (e: Exception){
                     when(e){
                         is NetworkErrorException, is UnknownHostException -> {
-                            setValue(Resource.error("Tidak ada koneksi internet", loadFromDb()))
+                            setValue(Resource.error("Tidak ada koneksi internet", dbResult))
                         }
-                        else -> setValue(Resource.error(e.localizedMessage ?: "Maaf, terjadi kesalahan pada server", loadFromDb()))
+                        else -> setValue(Resource.error(e.localizedMessage ?: "Maaf, terjadi kesalahan pada server", dbResult))
                     }
                 }
             }else{
@@ -49,9 +49,9 @@ abstract class NetworkBoundResource<ResultType, RequestType>(
                 body()?.let {
                     saveCallResult(processResponse(it))
                 }
-                setValue(Resource.success(loadFromDb()))
+                setValue(Resource.success(null))
             } else {
-                setValue(Resource.error(this.errorBody().toString(), loadFromDb()))
+                setValue(Resource.error(this.errorBody().toString(), null))
             }
         }
     }
@@ -71,9 +71,6 @@ abstract class NetworkBoundResource<ResultType, RequestType>(
 
     @MainThread
     protected abstract fun shouldFetch(data: ResultType?): Boolean
-
-    @MainThread
-    protected abstract suspend fun loadFromDb(): ResultType
 
     @MainThread
     protected abstract suspend fun createCallAsync(): retrofit2.Response<RequestType>

@@ -1,12 +1,14 @@
 package com.wepe.trydagger.ui.movies.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wepe.trydagger.base.BaseFragment
 import com.wepe.trydagger.base.BaseViewModel
@@ -17,6 +19,8 @@ import com.wepe.trydagger.ui.movies.viewmodel.MoviesViewModel
 import com.wepe.trydagger.utils.EspressoIdlingResource
 import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
+import com.wepe.trydagger.data.model.ResultsMovies
+
 
 class MoviesFragment : BaseFragment(){
 
@@ -57,17 +61,14 @@ class MoviesFragment : BaseFragment(){
     private fun initData() {
         viewModel.getMovies(1)
         viewModel.movies.observe(viewLifecycleOwner, Observer {
-            if (it != null){
-                it.forEach {results ->
-                    mAdapter.addData(results)
-                }
-                mAdapter.notifyDataSetChanged()
-            }
+
         })
+
+        viewModel.moviesPaged.observe(viewLifecycleOwner, noteObserver)
     }
 
     private fun initUi() {
-        mAdapter = MoviesAdapter(arrayListOf()){
+        mAdapter = MoviesAdapter{
             startActivity<DetailMovieActivity>("movies" to it)
         }
 
@@ -77,4 +78,11 @@ class MoviesFragment : BaseFragment(){
         }
 
     }
+
+    private val noteObserver =
+        Observer<PagedList<ResultsMovies>> { resultMovies ->
+            if (resultMovies != null) {
+                mAdapter.submitList(resultMovies)
+            }
+        }
 }

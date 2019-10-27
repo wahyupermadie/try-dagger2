@@ -19,6 +19,15 @@ android {
         buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
         buildConfigField "String", "API_KEY", "\"01c5d0d1ff15325934327ab3965e26f6\""
         multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
     }
     buildTypes {
         release {
@@ -89,10 +98,8 @@ dependencies {
 //    Room
     implementation 'androidx.room:room-runtime:2.2.1'
     kapt 'androidx.room:room-compiler:2.2.1'
-    implementation 'androidx.room:room-ktx:2.2.1'
-//    RxJava support for Room
-    implementation "android.arch.persistence.room:rxjava2:1.1.1"
+    implementation "androidx.room:room-ktx:2.2.1"
 
 //    Paging
-    implementation 'androidx.paging:paging-runtime:2.1.0'
+    implementation 'androidx.paging:paging-runtime-ktx:2.1.0'
 }
