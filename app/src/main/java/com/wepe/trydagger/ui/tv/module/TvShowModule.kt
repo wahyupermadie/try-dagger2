@@ -10,6 +10,7 @@ import com.wepe.trydagger.di.scope.FragmentScope
 import com.wepe.trydagger.domain.TvDomain
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
 class TvShowModule {
@@ -23,6 +24,6 @@ class TvShowModule {
     fun tvDomain(repository: TvRepositoryImpl): TvDomain = TvDomain(repository)
 
     @Provides
-    @FragmentScope
-    fun moviesDao(localDatabase: LocalDatabase) : TvShowDao = localDatabase.tvShowDao()
+    @Singleton
+    fun tvShowDao(localDatabase: LocalDatabase) : TvShowDao = localDatabase.tvShowDao()
 }

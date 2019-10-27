@@ -2,7 +2,9 @@ package com.wepe.trydagger.ui.movies.module
 
 import android.content.Context
 import com.google.gson.Gson
+import com.wepe.trydagger.data.database.LocalDatabase
 import com.wepe.trydagger.data.database.MoviesDao
+import com.wepe.trydagger.data.database.TvShowDao
 import com.wepe.trydagger.data.network.ApiService
 import com.wepe.trydagger.data.remote.MoviesRepositoryImpl
 import com.wepe.trydagger.domain.MoviesDomain
@@ -20,4 +22,8 @@ class MoviesModule {
     @Provides
     @Singleton
     fun moviesDomain(repository: MoviesRepositoryImpl): MoviesDomain = MoviesDomain(repository)
+
+    @Provides
+    @Singleton
+    fun moviesDao(localDatabase: LocalDatabase) : MoviesDao = localDatabase.moviesDao()
 }

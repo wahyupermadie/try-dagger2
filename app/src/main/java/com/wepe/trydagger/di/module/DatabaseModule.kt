@@ -18,12 +18,4 @@ class DatabaseModule {
             .allowMainThreadQueries()
             .fallbackToDestructiveMigration()
             .build()
-
-    @Provides
-    @Singleton
-    fun moviesDao(localDatabase: LocalDatabase) : MoviesDao = localDatabase.moviesDao()
-
-    @Provides
-    @Singleton
-    fun tvShowDao(localDatabase: LocalDatabase) : TvShowDao = localDatabase.tvShowDao()
 }
